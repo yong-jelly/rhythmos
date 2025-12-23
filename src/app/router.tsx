@@ -2,6 +2,9 @@ import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { OnboardingPage } from "@/pages/onboarding";
 import { HomePage } from "@/pages/home";
+import { JourneyPage } from "@/pages/journey";
+import { CirclePage } from "@/pages/circle";
+import { ArchivesPage } from "@/pages/archives";
 import { PledgeWizardPage } from "@/pages/pledge-wizard";
 import { DailyCheckinPage } from "@/pages/daily-checkin";
 import { RepairFlowPage } from "@/pages/repair-flow";
@@ -32,6 +35,9 @@ export function AppRouter() {
         <Route path="/" element={<Navigate to="/onboarding" replace />} />
         <Route path="/onboarding" element={<OnboardingPage />} />
         <Route path="/home" element={<HomePage />} />
+        <Route path="/journey" element={<JourneyPage />} />
+        <Route path="/circle" element={<CirclePage />} />
+        <Route path="/archives" element={<ArchivesPage />} />
         <Route path="/pledge/new" element={<PledgeWizardPage />} />
         <Route path="/checkin" element={<DailyCheckinPage />} />
         <Route path="/repair" element={<RepairFlowPage />} />
