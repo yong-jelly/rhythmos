@@ -5,7 +5,15 @@ const Card = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElemen
   <div
     ref={ref}
     className={cn(
-      "rounded-2xl border border-border/50 bg-card text-card-foreground shadow-[0_1px_3px_0_rgb(0_0_0_/0.05),0_1px_2px_-1px_rgb(0_0_0_/0.05)] transition-all duration-300 hover:shadow-[0_10px_15px_-3px_rgb(0_0_0_/0.08),0_4px_6px_-4px_rgb(0_0_0_/0.08)] hover:-translate-y-0.5",
+      // Airbnb 스타일 - 카드 기본 스타일
+      "rounded-xl border border-border/40 bg-card text-card-foreground",
+      // 그림자 - Airbnb + Instagram 통합
+      "shadow-[0_1px_2px_rgba(0,0,0,0.04),0_4px_8px_rgba(0,0,0,0.04)]",
+      // 트랜지션 - Fluent2 + Instagram
+      "transition-all duration-200 ease-[cubic-bezier(0.4,0,0.2,1)]",
+      // 호버 효과 - Airbnb 스타일
+      "hover:shadow-[0_2px_4px_rgba(0,0,0,0.06),0_8px_16px_rgba(0,0,0,0.06)]",
+      "hover:-translate-y-0.5",
       className
     )}
     {...props}

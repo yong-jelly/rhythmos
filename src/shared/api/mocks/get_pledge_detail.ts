@@ -6,3 +6,4 @@ export const get_pledge_detail = (pledgeId: string): Pledge | undefined => {
   return pledges.find((p) => p.id === pledgeId);
 };
 
+

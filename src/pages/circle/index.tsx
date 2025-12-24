@@ -42,8 +42,9 @@ export function CirclePage() {
         </div>
       </main>
 
-      <BottomNavigation onAddClick={() => navigate("/pledge/new")} />
+      <BottomNavigation />
     </div>
   );
 }
+
 

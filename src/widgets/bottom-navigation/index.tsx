@@ -1,79 +1,65 @@
-import { Home, Sparkles, Users, Archive, Plus } from "lucide-react";
+import { Home, Sparkles, Users, Archive } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { Button } from "@/shared/ui";
 import { cn } from "@/shared/lib/utils";
 
 type NavItem = {
   id: string;
-  icon: React.ReactNode;
+  icon: React.ComponentType<{ className?: string }>;
   label: string;
   path: string;
 };
 
 const navItems: NavItem[] = [
-  { id: "home", icon: <Home className="h-5 w-5" />, label: "홈", path: "/home" },
-  { id: "journey", icon: <Sparkles className="h-5 w-5" />, label: "여정", path: "/journey" },
-  { id: "circle", icon: <Users className="h-5 w-5" />, label: "서클", path: "/circle" },
-  { id: "archives", icon: <Archive className="h-5 w-5" />, label: "기록실", path: "/archives" },
+  { id: "home", icon: Home, label: "홈", path: "/home" },
+  { id: "journey", icon: Sparkles, label: "여정", path: "/journey" },
+  { id: "circle", icon: Users, label: "서클", path: "/circle" },
+  { id: "archives", icon: Archive, label: "기록실", path: "/archives" },
 ];
 
-interface BottomNavigationProps {
-  onAddClick?: () => void;
-}
-
-export function BottomNavigation({ onAddClick }: BottomNavigationProps) {
+export function BottomNavigation() {
   const navigate = useNavigate();
   const location = useLocation();
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-20 border-t border-border/30 bg-background/95 backdrop-blur-md safe-area-bottom shadow-[0_-1px_2px_0_rgb(0_0_0_/0.03)]">
-      <div className="flex items-center justify-around px-4 py-3 max-w-4xl mx-auto">
-        {navItems.slice(0, 2).map((item) => (
-          <Button
-            key={item.id}
-            variant="ghost"
-            size="sm"
-            className={cn(
-              "flex h-auto flex-col gap-1.5 rounded-xl px-4 py-2.5 transition-all duration-200",
-              location.pathname === item.path
-                ? "bg-primary/10 text-primary scale-105"
-                : "text-muted-foreground hover:text-foreground hover:bg-accent/30"
-            )}
-            onClick={() => navigate(item.path)}
-          >
-            {item.icon}
-            <span className="text-xs font-semibold">{item.label}</span>
-          </Button>
-        ))}
-
-        {/* Center Add Button */}
-        <div className="relative -mt-10">
-          <Button
-            size="lg"
-            className="h-16 w-16 rounded-full shadow-[0_4px_12px_0_rgb(0_0_0_/0.15)] hover:shadow-[0_6px_16px_0_rgb(0_0_0_/0.2)] hover:-translate-y-1 transition-all duration-300"
-            onClick={onAddClick}
-          >
-            <Plus className="h-6 w-6" />
-          </Button>
-        </div>
-
-        {navItems.slice(2).map((item) => (
-          <Button
-            key={item.id}
-            variant="ghost"
-            size="sm"
-            className={cn(
-              "flex h-auto flex-col gap-1.5 rounded-xl px-4 py-2.5 transition-all duration-200",
-              location.pathname === item.path
-                ? "bg-primary/10 text-primary scale-105"
-                : "text-muted-foreground hover:text-foreground hover:bg-accent/30"
-            )}
-            onClick={() => navigate(item.path)}
-          >
-            {item.icon}
-            <span className="text-xs font-semibold">{item.label}</span>
-          </Button>
-        ))}
+    <nav className="fixed bottom-0 left-0 right-0 z-50">
+      {/* iOS 스타일 배경 및 블러 - 모던하고 심플한 스타일 */}
+      <div className="absolute inset-0 bg-background/85 backdrop-blur-2xl border-t border-border/10" />
+      
+      {/* Safe area 고려한 컨테이너 - iOS 가이드라인 준수 */}
+      <div className="relative flex items-center justify-around px-4 py-2.5 max-w-4xl mx-auto safe-area-bottom">
+        {navItems.map((item) => {
+          const isActive = location.pathname === item.path;
+          const IconComponent = item.icon;
+          
+          return (
+            <button
+              key={item.id}
+              className={cn(
+                "relative flex items-center justify-center min-w-[44px] min-h-[44px] rounded-xl",
+                "transition-all duration-200 ease-[cubic-bezier(0.4,0,0.2,1)]",
+                "active:scale-[0.92] active:transition-transform active:duration-100",
+                isActive
+                  ? "text-primary"
+                  : "text-muted-foreground active:text-foreground"
+              )}
+              onClick={() => navigate(item.path)}
+              aria-label={item.label}
+            >
+              {/* iOS 스타일 선택 인디케이터 */}
+              {isActive && (
+                <div className="absolute inset-0 bg-primary/8 rounded-xl" />
+              )}
+              
+              {/* 아이콘 - iOS 스타일 */}
+              <IconComponent 
+                className={cn(
+                  "relative z-10 transition-all duration-200 ease-[cubic-bezier(0.4,0,0.2,1)]",
+                  isActive ? "h-6 w-6" : "h-5 w-5"
+                )} 
+              />
+            </button>
+          );
+        })}
       </div>
     </nav>
   );

@@ -9,7 +9,11 @@ export function JourneyPage() {
 
   return (
     <div className="flex min-h-screen flex-col bg-background pb-28">
-      <Header title="여정" subtitle="당신의 성장 기록" />
+      <Header 
+        title="여정" 
+        subtitle="당신의 성장 기록"
+        onAddClick={() => navigate("/pledge/new")}
+      />
 
       <main className="flex-1 px-5 py-8 max-w-4xl mx-auto w-full">
         <div className="mb-10">
@@ -48,8 +52,9 @@ export function JourneyPage() {
         </div>
       </main>
 
-      <BottomNavigation onAddClick={() => navigate("/pledge/new")} />
+      <BottomNavigation />
     </div>
   );
 }
+
 

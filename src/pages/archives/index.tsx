@@ -67,8 +67,9 @@ export function ArchivesPage() {
         </div>
       </main>
 
-      <BottomNavigation onAddClick={() => navigate("/pledge/new")} />
+      <BottomNavigation />
     </div>
   );
 }
+
 

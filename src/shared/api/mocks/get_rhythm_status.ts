@@ -7,3 +7,4 @@ export const get_rhythm_status = (): RhythmStatus => ({
   lastCheckIn: "2024-12-22T08:15:00Z",
 });
 
+

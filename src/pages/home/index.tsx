@@ -56,6 +56,7 @@ export function HomePage() {
         title="리듬"
         subtitle="오늘도 당신의 속도로"
         onCheckinClick={() => navigate("/checkin")}
+        onAddClick={() => navigate("/pledge/new")}
       />
 
       <main className="flex-1 px-5 py-8 max-w-4xl mx-auto w-full">
@@ -106,7 +107,7 @@ export function HomePage() {
         )}
       </main>
 
-      <BottomNavigation onAddClick={() => navigate("/pledge/new")} />
+      <BottomNavigation />
     </div>
   );
 }
