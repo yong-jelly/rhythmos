@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Header } from "@/widgets/header";
 import { BottomNavigation } from "@/widgets/bottom-navigation";
-import { Card, Button, Badge } from "@/shared/ui";
+import { Card, Button, Badge, Carousel, CarouselContent, CarouselItem } from "@/shared/ui";
 import {
   Users,
   Plus,
@@ -135,6 +135,26 @@ export function CirclePage() {
       progress: 50,
       daysLeft: 45,
       stake: "우승자 디너 쿠폰 🎁",
+    },
+    {
+      id: "2",
+      title: "아침 일찍 일어나기",
+      goal: "함께 건강한 아침 습관 만들기",
+      participants: 3,
+      activeParticipants: 3,
+      progress: 75,
+      daysLeft: 20,
+      stake: "브런치 쿠폰 🥐",
+    },
+    {
+      id: "3",
+      title: "독서 챌린지",
+      goal: "한 달에 책 3권 읽기",
+      participants: 4,
+      activeParticipants: 2,
+      progress: 30,
+      daysLeft: 15,
+      stake: "서점 기프트카드 📚",
     },
   ];
 
@@ -334,69 +354,79 @@ export function CirclePage() {
           </button>
 
           {expandedSections.groupChallenges && (
-            <div className="space-y-3">
-              {groupChallenges.map((challenge) => (
-                <Card
-                  key={challenge.id}
-                  className={cn(
-                    "cursor-pointer overflow-hidden border-2 border-chart-2/40 bg-gradient-to-br from-chart-2/10 via-chart-3/5 to-transparent",
-                    designSystem.shadow.elevation2,
-                    "transition-all duration-200 hover:shadow-elevation4 hover:-translate-y-1"
-                  )}
-                  onClick={() => navigate(`/circle/challenge/${challenge.id}`)}
-                >
-                  <div className="p-5">
-                    <div className="mb-4 flex items-start justify-between">
-                      <div className="flex-1">
-                        <div className="mb-2 flex items-center gap-2">
-                          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-chart-2/20">
-                            <Trophy className="h-4 w-4 text-chart-2" />
+            <Carousel
+              opts={{
+                align: "center",
+                loop: true,
+                dragFree: true,
+              }}
+              className="w-full"
+            >
+              <CarouselContent className="-ml-2 md:-ml-4">
+                {groupChallenges.map((challenge) => (
+                  <CarouselItem key={challenge.id} className="pl-2 md:pl-4 md:basis-4/5 lg:basis-3/5">
+                    <Card
+                      className={cn(
+                        "cursor-pointer overflow-hidden border-2 border-chart-2/40 bg-gradient-to-br from-chart-2/10 via-chart-3/5 to-transparent",
+                        designSystem.shadow.elevation2,
+                        "transition-all duration-200 hover:shadow-elevation4 hover:-translate-y-1"
+                      )}
+                      onClick={() => navigate(`/circle/challenge/${challenge.id}`)}
+                    >
+                      <div className="p-5">
+                        <div className="mb-4 flex items-start justify-between">
+                          <div className="flex-1">
+                            <div className="mb-2 flex items-center gap-2">
+                              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-chart-2/20">
+                                <Trophy className="h-4 w-4 text-chart-2" />
+                              </div>
+                              <Badge variant="secondary" className="bg-chart-2/10 text-chart-2">
+                                진행 중
+                              </Badge>
+                            </div>
+                            <h4 className="mb-1 text-lg font-semibold text-card-foreground">{challenge.title}</h4>
+                            <p className="text-sm text-muted-foreground">{challenge.goal}</p>
                           </div>
-                          <Badge variant="secondary" className="bg-chart-2/10 text-chart-2">
-                            진행 중
-                          </Badge>
                         </div>
-                        <h4 className="mb-1 text-lg font-semibold text-card-foreground">{challenge.title}</h4>
-                        <p className="text-sm text-muted-foreground">{challenge.goal}</p>
-                      </div>
-                    </div>
 
-                    <div className="mb-4 grid grid-cols-3 gap-2">
-                      <div className="rounded-lg bg-background/60 p-2.5 text-center backdrop-blur-sm">
-                        <p className="mb-0.5 text-lg font-bold text-chart-2">{challenge.participants}</p>
-                        <p className="text-xs text-muted-foreground">참여자</p>
-                      </div>
-                      <div className="rounded-lg bg-background/60 p-2.5 text-center backdrop-blur-sm">
-                        <p className="mb-0.5 text-lg font-bold text-primary">{challenge.daysLeft}일</p>
-                        <p className="text-xs text-muted-foreground">남음</p>
-                      </div>
-                      <div className="rounded-lg bg-background/60 p-2.5 text-center backdrop-blur-sm">
-                        <p className="mb-0.5 text-lg font-bold text-chart-3">{challenge.progress}%</p>
-                        <p className="text-xs text-muted-foreground">진행률</p>
-                      </div>
-                    </div>
+                        <div className="mb-4 grid grid-cols-3 gap-2">
+                          <div className="rounded-lg bg-background/60 p-2.5 text-center backdrop-blur-sm">
+                            <p className="mb-0.5 text-lg font-bold text-chart-2">{challenge.participants}</p>
+                            <p className="text-xs text-muted-foreground">참여자</p>
+                          </div>
+                          <div className="rounded-lg bg-background/60 p-2.5 text-center backdrop-blur-sm">
+                            <p className="mb-0.5 text-lg font-bold text-primary">{challenge.daysLeft}일</p>
+                            <p className="text-xs text-muted-foreground">남음</p>
+                          </div>
+                          <div className="rounded-lg bg-background/60 p-2.5 text-center backdrop-blur-sm">
+                            <p className="mb-0.5 text-lg font-bold text-chart-3">{challenge.progress}%</p>
+                            <p className="text-xs text-muted-foreground">진행률</p>
+                          </div>
+                        </div>
 
-                    <div className="mb-3 h-2.5 w-full overflow-hidden rounded-full bg-muted">
-                      <div
-                        className="h-full rounded-full bg-gradient-to-r from-chart-2 to-chart-3 transition-all duration-300"
-                        style={{ width: `${challenge.progress}%` }}
-                      />
-                    </div>
+                        <div className="mb-3 h-2.5 w-full overflow-hidden rounded-full bg-muted">
+                          <div
+                            className="h-full rounded-full bg-gradient-to-r from-chart-2 to-chart-3 transition-all duration-300"
+                            style={{ width: `${challenge.progress}%` }}
+                          />
+                        </div>
 
-                    <div className="flex items-center justify-between text-xs">
-                      <div className="flex items-center gap-1.5 text-muted-foreground">
-                        <Trophy className="h-3.5 w-3.5 text-chart-2" />
-                        <span>{challenge.stake}</span>
+                        <div className="flex items-center justify-between text-xs">
+                          <div className="flex items-center gap-1.5 text-muted-foreground">
+                            <Trophy className="h-3.5 w-3.5 text-chart-2" />
+                            <span>{challenge.stake}</span>
+                          </div>
+                          <div className="flex items-center gap-1 rounded-full bg-primary/10 px-2 py-1">
+                            <Flame className="h-3 w-3 text-primary" />
+                            <span className="font-medium text-primary">{challenge.activeParticipants}명 활발</span>
+                          </div>
+                        </div>
                       </div>
-                      <div className="flex items-center gap-1 rounded-full bg-primary/10 px-2 py-1">
-                        <Flame className="h-3 w-3 text-primary" />
-                        <span className="font-medium text-primary">{challenge.activeParticipants}명 활발</span>
-                      </div>
-                    </div>
-                  </div>
-                </Card>
-              ))}
-            </div>
+                    </Card>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+            </Carousel>
           )}
         </div>
 
