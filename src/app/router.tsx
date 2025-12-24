@@ -4,6 +4,7 @@ import { OnboardingPage } from "@/pages/onboarding";
 import { HomePage } from "@/pages/home";
 import { JourneyPage } from "@/pages/journey";
 import { CirclePage } from "@/pages/circle";
+import { GroupChallengePage } from "@/pages/circle/challenge";
 import { ArchivesPage } from "@/pages/archives";
 import { PledgeWizardPage } from "@/pages/pledge-wizard";
 import { DailyCheckinPage } from "@/pages/daily-checkin";
@@ -37,6 +38,7 @@ export function AppRouter() {
         <Route path="/home" element={<HomePage />} />
         <Route path="/journey" element={<JourneyPage />} />
         <Route path="/circle" element={<CirclePage />} />
+        <Route path="/circle/challenge/:id" element={<GroupChallengePage />} />
         <Route path="/archives" element={<ArchivesPage />} />
         <Route path="/pledge/new" element={<PledgeWizardPage />} />
         <Route path="/checkin" element={<DailyCheckinPage />} />
