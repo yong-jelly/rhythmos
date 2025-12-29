@@ -6,6 +6,7 @@ import { JourneyPage } from "@/pages/journey";
 import { CirclePage } from "@/pages/circle";
 import { GroupChallengePage } from "@/pages/circle/challenge";
 import { ArchivesPage } from "@/pages/archives";
+import { CalendarPage } from "@/pages/calendar";
 import { PledgeWizardPage } from "@/pages/pledge-wizard";
 import { DailyCheckinPage } from "@/pages/daily-checkin";
 import { RepairFlowPage } from "@/pages/repair-flow";
@@ -40,6 +41,7 @@ export function AppRouter() {
         <Route path="/circle" element={<CirclePage />} />
         <Route path="/circle/challenge/:id" element={<GroupChallengePage />} />
         <Route path="/archives" element={<ArchivesPage />} />
+        <Route path="/calendar" element={<CalendarPage />} />
         <Route path="/pledge/new" element={<PledgeWizardPage />} />
         <Route path="/checkin" element={<DailyCheckinPage />} />
         <Route path="/repair" element={<RepairFlowPage />} />

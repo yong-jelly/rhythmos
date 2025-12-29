@@ -79,6 +79,14 @@ export interface Memory {
   imageUrl?: string;
 }
 
+// 할일 타입
+export interface Todo {
+  id: string;
+  content: string;
+  completed: boolean;
+  createdAt: string;
+}
+
 // 리듬 상태 타입
 export interface RhythmStatus {
   state: "flowing" | "unstable" | "finding";

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Header } from "@/widgets/header";
 import { BottomNavigation } from "@/widgets/bottom-navigation";
 import { Card, Button, Badge, Carousel, CarouselContent, CarouselItem } from "@/shared/ui";
+import { SharedPledgeCard } from "@/features/circle";
 import {
   Users,
   Plus,
@@ -32,11 +33,18 @@ interface FamilyMember {
 interface SharedPledge {
   id: string;
   title: string;
-  participants: string[];
+  participants: {
+    id: string;
+    name: string;
+    avatar: string;
+    hasCheckedInToday: boolean;
+    color: string;
+  }[];
   progress: number;
   currentDay: number;
   totalDays: number;
   sharedReturns: number;
+  lastActivity?: string;
 }
 
 interface GroupChallenge {
@@ -108,20 +116,29 @@ export function CirclePage() {
     {
       id: "1",
       title: "저녁 8시 이후 가족 시간",
-      participants: ["엄마", "지우", "아빠"],
+      participants: [
+        { id: "1", name: "엄마", avatar: "엄", hasCheckedInToday: true, color: "bg-primary" },
+        { id: "2", name: "지우", avatar: "지", hasCheckedInToday: true, color: "bg-chart-2" },
+        { id: "3", name: "아빠", avatar: "아", hasCheckedInToday: false, color: "bg-chart-3" },
+      ],
       progress: 60,
       currentDay: 8,
       totalDays: 14,
       sharedReturns: 1,
+      lastActivity: "지우님이 1시간 전에 체크인했어요",
     },
     {
       id: "2",
       title: "주말 아침 함께 운동하기",
-      participants: ["엄마", "지우"],
+      participants: [
+        { id: "1", name: "엄마", avatar: "엄", hasCheckedInToday: false, color: "bg-primary" },
+        { id: "2", name: "지우", avatar: "지", hasCheckedInToday: false, color: "bg-chart-2" },
+      ],
       progress: 42,
       currentDay: 3,
       totalDays: 7,
       sharedReturns: 0,
+      lastActivity: "아직 오늘의 리듬이 시작되지 않았어요",
     },
   ];
 
@@ -447,48 +464,11 @@ export function CirclePage() {
           {expandedSections.sharedPledges && (
             <div className="space-y-3">
               {sharedPledges.map((pledge) => (
-                <Card
+                <SharedPledgeCard
                   key={pledge.id}
-                  className={cn(
-                    "overflow-hidden border-2 border-primary/40 bg-gradient-to-br from-primary/10 to-transparent",
-                    designSystem.shadow.elevation2,
-                    "transition-all duration-200 hover:shadow-elevation4 hover:-translate-y-0.5"
-                  )}
-                >
-                  <div className="p-5">
-                    <div className="mb-4 flex items-start justify-between">
-                      <div className="flex-1">
-                        <h4 className="mb-1 font-semibold text-card-foreground">{pledge.title}</h4>
-                        <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
-                          <Users className="h-4 w-4" />
-                          <span>{pledge.participants.join(", ")}</span>
-                        </div>
-                      </div>
-                      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/20">
-                        <Users className="h-5 w-5 text-primary" />
-                      </div>
-                    </div>
-
-                    <div className="mb-4 h-2 w-full overflow-hidden rounded-full bg-muted">
-                      <div
-                        className="h-full rounded-full bg-primary transition-all duration-300"
-                        style={{ width: `${pledge.progress}%` }}
-                      />
-                    </div>
-
-                    <div className="flex items-center justify-between text-xs">
-                      <span className="text-muted-foreground">
-                        {pledge.totalDays}일 중 {pledge.currentDay}일째
-                      </span>
-                      {pledge.sharedReturns > 0 && (
-                        <div className="flex items-center gap-1">
-                          <RotateCcw className="h-3 w-3 text-primary" />
-                          <span className="font-medium text-primary">함께 귀환 {pledge.sharedReturns}회</span>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </Card>
+                  pledge={pledge}
+                  onClick={() => console.log("Shared pledge clicked", pledge.id)}
+                />
               ))}
             </div>
           )}

@@ -3,6 +3,7 @@ export { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent }
 export { Input } from "./input";
 export { Textarea } from "./textarea";
 export { Progress } from "./progress";
+export { Checkbox } from "./checkbox";
 export { Badge, badgeVariants, type BadgeProps } from "./badge";
 export {
   Dialog,
@@ -16,13 +17,7 @@ export {
   DialogTitle,
   DialogDescription,
 } from "./dialog";
-export {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselPrevious,
-  CarouselNext,
-  type CarouselApi,
-} from "./carousel";
+export { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext, type CarouselApi } from "./carousel";
+export { Avatar, AvatarImage, AvatarFallback } from "./avatar";
 
 
