@@ -31,11 +31,11 @@ export function SharedPledgeCard({ pledge, onClick }: SharedPledgeCardProps) {
   return (
     <Card 
       className={cn(
-        "group relative overflow-hidden border-2 transition-all duration-300",
+        "group relative overflow-hidden border border-slate-200 transition-all duration-300",
         allCheckedIn 
           ? "border-primary/40 bg-gradient-to-br from-primary/10 via-white to-white shadow-md" 
-          : "border-slate-100 bg-white shadow-sm hover:border-primary/20",
-        "rounded-[28px] p-6 mb-4"
+          : "bg-white shadow-sm hover:border-primary/20",
+        "rounded-[32px] p-6 mb-8 mx-4"
       )}
       onClick={onClick}
     >
@@ -43,11 +43,14 @@ export function SharedPledgeCard({ pledge, onClick }: SharedPledgeCardProps) {
         {/* 상단: 타이틀 및 공유 아이콘 */}
         <div className="flex justify-between items-start mb-5">
           <div className="flex flex-col gap-1">
-            <div className="flex items-center gap-2 mb-1">
-              <div className="flex h-6 w-6 items-center justify-center rounded-full bg-primary/10">
-                <Users className="h-3 w-3 text-primary" />
+            <div className="flex items-center gap-2 mb-2">
+              <Badge variant="secondary" className="bg-primary/10 text-primary hover:bg-primary/10 border-none font-bold text-[11px] px-2.5 py-0.5 rounded-full">
+                함께하는 약속
+              </Badge>
+              <div className="flex items-center gap-1 text-slate-400">
+                <Users className="h-3.5 w-3.5" />
+                <span className="text-[11px] font-bold">{participants.length}명 참여</span>
               </div>
-              <span className="text-[11px] font-bold text-primary uppercase tracking-wider">Shared Rhythm</span>
             </div>
             <h4 className="text-[18px] font-black tracking-tight text-slate-900 leading-tight">
               {title}

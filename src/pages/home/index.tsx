@@ -1,23 +1,18 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Header } from "@/widgets/header";
 import { BottomNavigation } from "@/widgets/bottom-navigation";
 import { FeedItem } from "@/widgets/feed-item";
-import { DelayedTodoCard } from "@/features/todo";
 import { PledgeStack } from "@/widgets/pledge-stack";
 import { CircleActivityCard, GroupChallengeCard, SharedPledgeCard } from "@/features/circle";
-import { ReturningWelcome } from "@/features/returning-welcome";
-import { SlippedPrompt } from "@/features/slipped-prompt";
-import { Card } from "@/shared/ui";
-import { PledgeCard, usePledgeStore } from "@/entities/pledge";
-import { MemoryCard, useMemoryStore } from "@/entities/memory";
-import { RhythmStatusCard, useRhythmStore } from "@/entities/rhythm";
 import { useUserStore } from "@/entities/user";
+import { usePledgeStore } from "@/entities/pledge";
 import { useTodoStore } from "@/entities/todo";
+import { useMemoryStore } from "@/entities/memory";
+import { useRhythmStore } from "@/entities/rhythm";
 
 export function HomePage() {
   const navigate = useNavigate();
-  const [showWelcome, setShowWelcome] = useState(false);
 
   const { user, fetchUser } = useUserStore();
   const { pledges, fetchPledges, getSlippedPledges } = usePledgeStore();
@@ -33,29 +28,9 @@ export function HomePage() {
     fetchStatus();
   }, [fetchUser, fetchPledges, fetchTodos, fetchMemories, fetchStatus]);
 
-  useEffect(() => {
-    if (user?.state === "returning") {
-      setShowWelcome(true);
-    }
-  }, [user]);
-
   const slippedPledges = getSlippedPledges();
   const recentMemory = getRecentMemory();
   const nextPledge = pledges[0];
-
-  // 복귀자 환영 화면
-  if (showWelcome && user?.state === "returning") {
-    return (
-      <ReturningWelcome
-        returnCount={user.returnCount}
-        onContinue={() => {
-          setShowWelcome(false);
-          navigate("/repair");
-        }}
-        onBrowse={() => setShowWelcome(false)}
-      />
-    );
-  }
 
   // 인사말 결정
   const getGreeting = () => {
@@ -107,25 +82,23 @@ export function HomePage() {
         />
 
         {/* 함께하는 약속 카드 추가 */}
-        <div className="px-4 mb-8">
-          <SharedPledgeCard 
-            pledge={{
-              id: "shared_1",
-              title: "저녁 8시 이후 가족 시간",
-              participants: [
-                { id: "u1", name: "엄마", avatar: "엄", hasCheckedInToday: true, color: "bg-primary" },
-                { id: "u2", name: "지우", avatar: "지", hasCheckedInToday: true, color: "bg-chart-2" },
-                { id: "u3", name: "아빠", avatar: "아", hasCheckedInToday: false, color: "bg-chart-3" },
-              ],
-              progress: 60,
-              currentDay: 8,
-              totalDays: 14,
-              sharedReturns: 1,
-              lastActivity: "지우님이 1시간 전에 체크인했어요"
-            }}
-            onClick={() => navigate("/circle")}
-          />
-        </div>
+        <SharedPledgeCard 
+          pledge={{
+            id: "shared_1",
+            title: "저녁 8시 이후 가족 시간",
+            participants: [
+              { id: "u1", name: "엄마", avatar: "엄", hasCheckedInToday: true, color: "bg-primary" },
+              { id: "u2", name: "지우", avatar: "지", hasCheckedInToday: true, color: "bg-chart-2" },
+              { id: "u3", name: "아빠", avatar: "아", hasCheckedInToday: false, color: "bg-chart-3" },
+            ],
+            progress: 60,
+            currentDay: 8,
+            totalDays: 14,
+            sharedReturns: 1,
+            lastActivity: "지우님이 1시간 전에 체크인했어요"
+          }}
+          onClick={() => navigate("/circle")}
+        />
 
         {/* 서클 활동 카드 (가족 소식) */}
         <CircleActivityCard 
@@ -161,10 +134,7 @@ export function HomePage() {
               ]
             }
           }}
-          stats={{
-            likes: 45,
-            comments: 5
-          }}
+          stats={{}}
         />
 
         {/* 서클 활동 카드 (응원 메시지) */}
@@ -196,8 +166,6 @@ export function HomePage() {
             data: { value: 42, title: "Weight Loss Goal", subtitle: "Phase 1: Foundation" }
           }}
           stats={{
-            likes: 89,
-            comments: 18,
             saves: 42
           }}
         />

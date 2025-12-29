@@ -1,4 +1,4 @@
-import { MessageCircle, Send, Bookmark, MoreHorizontal, ArrowUpRight } from "lucide-react";
+import { Send, Bookmark, MoreHorizontal, ArrowUpRight } from "lucide-react";
 import { cn } from "@/shared/lib/utils";
 import { Avatar, AvatarFallback, AvatarImage } from "@/shared/ui";
 import { CircularGauge, DotMatrixGrid, LinearProgress } from "@/shared/ui/analytics-widget";
@@ -25,8 +25,6 @@ interface FeedItemProps {
     data?: any; 
   };
   stats: {
-    likes: number;
-    comments: number;
     saves?: number;
   };
   minimal?: boolean;
@@ -65,7 +63,7 @@ export function FeedItem({ user, content, stats, minimal = false }: FeedItemProp
     return (
       <div 
         className={cn(
-          "relative rounded-[20px] overflow-hidden p-5 flex items-center justify-between min-h-[96px] shadow-[0_2px_8px_rgba(0,0,0,0.02)] transition-all duration-500 bg-white border border-border/40",
+          "relative rounded-[20px] overflow-hidden p-5 flex items-center justify-between min-h-[96px] shadow-[0_2px_8px_rgba(0,0,0,0.02)] transition-all duration-500 bg-white border border-slate-200",
           getThemeClass(content.type)
         )}
       >
@@ -111,7 +109,7 @@ export function FeedItem({ user, content, stats, minimal = false }: FeedItemProp
       {/* 1. 매니저 헤더 (Header) - 감성적인 카드 내부 통합 스타일로 변경 */}
       <div 
         className={cn(
-          "relative rounded-[32px] overflow-hidden p-8 flex flex-col min-h-[340px] shadow-[0_8px_32px_rgba(0,0,0,0.03)] transition-all duration-500 border border-border/40 hover:shadow-[0_16px_48px_rgba(0,0,0,0.06)] bg-white",
+          "relative rounded-[32px] overflow-hidden p-8 flex flex-col min-h-[340px] shadow-[0_8px_32px_rgba(0,0,0,0.03)] transition-all duration-500 border border-slate-200 hover:shadow-[0_16px_48px_rgba(0,0,0,0.06)] bg-white",
           getThemeClass(content.type)
         )}
       >
@@ -174,16 +172,6 @@ export function FeedItem({ user, content, stats, minimal = false }: FeedItemProp
             </div>
 
             <div className="flex items-center gap-4">
-              <div className="flex items-center gap-6 text-muted-foreground/60">
-                <div className="flex items-center gap-1.5">
-                  <MessageCircle className="h-5 w-5" />
-                  <span className="text-[14px] font-bold">{stats.comments}</span>
-                </div>
-                <div className="flex items-center -space-x-2">
-                  <div className="w-8 h-8 rounded-full bg-white border-2 border-background flex items-center justify-center text-[14px] shadow-sm">😋</div>
-                  <div className="w-8 h-8 rounded-full bg-white border-2 border-background flex items-center justify-center text-[14px] shadow-sm">👏</div>
-                </div>
-              </div>
               <button className="w-14 h-14 rounded-[24px] bg-foreground text-background flex items-center justify-center hover:scale-105 transition-transform shadow-lg shadow-foreground/10">
                 <ArrowUpRight className="h-7 w-7" />
               </button>

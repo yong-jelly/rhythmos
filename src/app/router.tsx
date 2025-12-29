@@ -1,6 +1,5 @@
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { useEffect } from "react";
-import { OnboardingPage } from "@/pages/onboarding";
 import { HomePage } from "@/pages/home";
 import { JourneyPage } from "@/pages/journey";
 import { CirclePage } from "@/pages/circle";
@@ -34,8 +33,7 @@ export function AppRouter() {
     <ErrorBoundary>
       <RouterDebug />
       <Routes>
-        <Route path="/" element={<Navigate to="/onboarding" replace />} />
-        <Route path="/onboarding" element={<OnboardingPage />} />
+        <Route path="/" element={<Navigate to="/home" replace />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/journey" element={<JourneyPage />} />
         <Route path="/circle" element={<CirclePage />} />

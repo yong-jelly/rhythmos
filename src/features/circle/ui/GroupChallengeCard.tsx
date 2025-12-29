@@ -28,7 +28,7 @@ export function GroupChallengeCard({ challenge, onClick }: GroupChallengeCardPro
   return (
     <Card 
       className={cn(
-        "group relative overflow-hidden border-none shadow-[0_8px_30px_rgb(0,0,0,0.04)] transition-all duration-300 hover:shadow-[0_12px_40px_rgb(0,0,0,0.08)]",
+        "group relative overflow-hidden border border-slate-200 shadow-[0_8px_30px_rgb(0,0,0,0.04)] transition-all duration-300 hover:shadow-[0_12px_40px_rgb(0,0,0,0.08)]",
         "bg-white rounded-[32px] p-6 mb-8 mx-4"
       )}
       onClick={onClick}
@@ -41,15 +41,15 @@ export function GroupChallengeCard({ challenge, onClick }: GroupChallengeCardPro
         <div className="flex justify-between items-start mb-4">
           <div className="flex flex-col gap-1">
             <div className="flex items-center gap-2">
-              <Badge variant="secondary" className="bg-chart-2/10 text-chart-2 hover:bg-chart-2/10 border-none font-bold text-[10px] px-2 py-0">
-                GROUP CHALLENGE
+              <Badge variant="secondary" className="bg-chart-2/10 text-chart-2 hover:bg-chart-2/10 border-none font-bold text-[11px] px-2.5 py-0.5 rounded-full">
+                그룹 챌린지
               </Badge>
-              <div className="flex items-center gap-1 text-primary animate-pulse">
-                <Flame className="w-3 h-3 fill-current" />
-                <span className="text-[10px] font-bold">{activeCount}명 활동 중</span>
+              <div className="flex items-center gap-1 text-primary animate-pulse ml-1">
+                <Flame className="w-3.5 h-3.5 fill-current" />
+                <span className="text-[11px] font-bold">{activeCount}명 활동 중</span>
               </div>
             </div>
-            <h3 className="text-[20px] font-black tracking-tight text-slate-900 mt-1">{title}</h3>
+            <h3 className="text-[20px] font-black tracking-tight text-slate-900 mt-2">{title}</h3>
             <p className="text-[14px] font-medium text-slate-500">{goal}</p>
           </div>
           <div className="w-10 h-10 rounded-2xl bg-slate-50 flex items-center justify-center text-slate-400 group-hover:bg-slate-900 group-hover:text-white transition-colors">

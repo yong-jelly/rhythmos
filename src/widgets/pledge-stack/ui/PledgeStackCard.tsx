@@ -56,7 +56,7 @@ export function PledgeStackCard({ pledge, className }: PledgeStackCardProps) {
     <div 
       className={cn(
         "relative w-full h-[220px] rounded-[32px] flex overflow-hidden",
-        "bg-white border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)]",
+        "bg-white border border-slate-200 shadow-[0_8px_30px_rgb(0,0,0,0.04)]",
         "transition-all duration-300",
         className
       )}
