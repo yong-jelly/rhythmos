@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Header } from "@/widgets/header";
 import { BottomNavigation } from "@/widgets/bottom-navigation";
 import { FeedItem } from "@/widgets/feed-item";
-import { TodoSummaryCard, DelayedTodoCard } from "@/features/todo";
+import { DelayedTodoCard } from "@/features/todo";
 import { PledgeStack } from "@/widgets/pledge-stack";
 import { CircleActivityCard, GroupChallengeCard, SharedPledgeCard } from "@/features/circle";
 import { ReturningWelcome } from "@/features/returning-welcome";
@@ -78,13 +78,13 @@ export function HomePage() {
 
       <main className="flex-1 max-w-2xl mx-auto w-full pt-6">
         {/* 할일 요약 섹션 */}
-        <TodoSummaryCard remainingCount={remainingTodos} />
+        {/* <TodoSummaryCard remainingCount={remainingTodos} /> */}
 
         {/* 오늘 집중해야 할 리듬 (Pledge Stack) */}
         <PledgeStack pledges={pledges} />
 
         {/* 지연된 할일 피드 (조건부 노출) */}
-        <DelayedTodoCard count={2} />
+        {/* <DelayedTodoCard count={2} /> */}
 
         {/* 그룹 챌린지 카드 추가 */}
         <GroupChallengeCard 

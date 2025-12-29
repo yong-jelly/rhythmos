@@ -7,34 +7,6 @@ interface TodoSummaryCardProps {
   remainingCount: number;
 }
 
-export function TodoSummaryCard({ remainingCount }: TodoSummaryCardProps) {
-  const navigate = useNavigate();
-
-  return (
-    <div className="px-4 mb-8">
-      <Card 
-        onClick={() => navigate("/calendar")}
-        className="group relative overflow-hidden bg-white/80 backdrop-blur-md border border-white/40 shadow-[0_8px_32px_rgba(0,0,0,0.04)] p-6 cursor-pointer active:scale-[0.98] transition-all"
-      >
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center">
-              <ListTodo className="w-6 h-6 text-primary" />
-            </div>
-            <div>
-              <h3 className="text-[17px] font-black tracking-tight text-foreground">오늘의 할일</h3>
-              <p className="text-[14px] font-medium text-muted-foreground">
-                {remainingCount > 0 ? `${remainingCount}개의 작업이 기다리고 있어요` : "모든 할일을 완료했어요!"}
-              </p>
-            </div>
-          </div>
-          <ChevronRight className="w-5 h-5 text-muted-foreground/40 group-hover:translate-x-1 transition-transform" />
-        </div>
-      </Card>
-    </div>
-  );
-}
-
 export function DelayedTodoCard({ count }: { count: number }) {
   const navigate = useNavigate();
 
