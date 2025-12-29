@@ -17,7 +17,12 @@ export function ArchivesPage() {
 
   return (
     <div className="flex min-h-screen flex-col bg-background pb-28">
-      <Header title="기록실" subtitle="모든 기억들" />
+      <Header 
+        title="기록실" 
+        subtitle="모든 기억들" 
+        onBackClick={() => navigate(-1)}
+        onSearchClick={() => {}}
+      />
 
       <main className="flex-1 px-5 py-8 max-w-4xl mx-auto w-full">
         <div className="mb-10">

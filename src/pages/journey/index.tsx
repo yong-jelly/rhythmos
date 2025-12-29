@@ -12,7 +12,8 @@ export function JourneyPage() {
       <Header 
         title="여정" 
         subtitle="당신의 성장 기록"
-        onAddClick={() => navigate("/pledge/new")}
+        onSearchClick={() => {}}
+        onNotificationClick={() => {}}
       />
 
       <main className="flex-1 px-5 py-8 max-w-4xl mx-auto w-full">

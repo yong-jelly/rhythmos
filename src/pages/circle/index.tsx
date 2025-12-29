@@ -225,6 +225,7 @@ export function CirclePage() {
         <Header
           title={member.name}
           subtitle={member.statusText}
+          onBackClick={() => setSelectedMember(null)}
           onAddClick={() => navigate("/pledge/new")}
         />
 
@@ -329,7 +330,8 @@ export function CirclePage() {
       <Header
         title="서클"
         subtitle="함께하는 사람들"
-        onAddClick={() => navigate("/pledge/new")}
+        onSearchClick={() => {}}
+        onNotificationClick={() => {}}
       />
 
       <main className="flex-1 px-5 py-6 max-w-4xl mx-auto w-full">

@@ -1,79 +1,91 @@
-import { Play, Archive, Plus } from "lucide-react";
+import { Search, Bell, Plus, Play, Archive, ArrowLeft } from "lucide-react";
 import { Button } from "@/shared/ui";
 import { cn } from "@/shared/lib/utils";
 
 interface HeaderProps {
-  title: string;
+  title?: string;
   subtitle?: string;
+  showSearch?: boolean;
+  showNotifications?: boolean;
+  onSearchClick?: () => void;
+  onNotificationClick?: () => void;
   onCheckinClick?: () => void;
   onArchiveClick?: () => void;
   onAddClick?: () => void;
+  onBackClick?: () => void;
 }
 
-export function Header({ title, subtitle, onCheckinClick, onArchiveClick, onAddClick }: HeaderProps) {
-  const hasActions = !!(onAddClick || onCheckinClick || onArchiveClick);
+export function Header({ 
+  title, 
+  subtitle, 
+  showSearch = true,
+  showNotifications = true,
+  onSearchClick,
+  onNotificationClick,
+  onCheckinClick, 
+  onArchiveClick, 
+  onAddClick,
+  onBackClick
+}: HeaderProps) {
+  const hasActions = !!(onAddClick || onCheckinClick || onArchiveClick || onSearchClick || onNotificationClick);
   
   return (
-    <header className="sticky top-0 z-10 bg-background/80 backdrop-blur-xl border-b border-border/5 safe-area-top">
-      <div className="flex items-center justify-between px-4 py-4 max-w-4xl mx-auto w-full">
-        {/* 좌측 공간 - 균형을 위한 빈 공간 */}
-        <div className="flex items-center gap-2 min-w-[80px]">
-          {hasActions && <div className="w-10" />}
-        </div>
-
-        {/* 중앙 제목 - Airbnb 스타일 */}
-        <div className="flex-1 text-center px-4">
-          <h1 className="text-lg font-semibold tracking-tight text-foreground">{title}</h1>
+    <header className="sticky top-0 z-10 bg-background/95 backdrop-blur-xl safe-area-top">
+      <div className="flex items-start justify-between px-6 pt-8 pb-4 max-w-4xl mx-auto w-full">
+        {/* 좌측 제목 - 과감한 타이포그래피 적용 */}
+        <div className="flex flex-col gap-1">
+          <div className="flex items-center gap-3">
+            {onBackClick && (
+              <button
+                onClick={onBackClick}
+                className="p-1 -ml-2 hover:bg-accent rounded-full transition-colors"
+                aria-label="뒤로 가기"
+              >
+                <ArrowLeft className="h-8 w-8 text-foreground stroke-[2.5]" />
+              </button>
+            )}
+            <h1 className="text-4xl font-black tracking-tight flex items-baseline gap-2">
+              <span className="text-foreground">
+                {title ? title : "Rhythmos"}
+              </span>
+              {!title && (
+                <span className="text-muted-foreground/30 font-bold text-3xl">Today</span>
+              )}
+            </h1>
+          </div>
           {subtitle && (
-            <p className="mt-0.5 text-xs font-normal text-muted-foreground">{subtitle}</p>
+            <p className="text-sm font-semibold text-muted-foreground/60 tracking-tight ml-1">{subtitle}</p>
           )}
         </div>
 
-        {/* 우측 액션 버튼들 - Airbnb 스타일 */}
-        <div className="flex items-center gap-1 min-w-[80px] justify-end">
-          {onAddClick && (
+        {/* 우측 액션 버튼들 - 이미지 스타일 반영 (Search, Bell) */}
+        <div className="flex items-center gap-4 mt-1">
+          {showNotifications && (
             <button
               className={cn(
-                "flex items-center justify-center w-10 h-10 rounded-full",
-                "hover:bg-accent/60 active:bg-accent/80",
-                "transition-all duration-200 ease-out",
+                "flex items-center justify-center p-1 rounded-full",
+                "hover:bg-accent/60 active:bg-accent/80 transition-all",
                 "active:scale-95"
               )}
-              onClick={onAddClick}
-              aria-label="새 약속 만들기"
+              onClick={onNotificationClick}
+              aria-label="알림"
             >
-              <Plus className="h-5 w-5 text-foreground" />
+              <Bell className="h-7 w-7 text-foreground stroke-[2]" />
             </button>
           )}
-          {onCheckinClick && (
+          {showSearch && (
             <button
               className={cn(
-                "flex items-center justify-center w-10 h-10 rounded-full",
-                "hover:bg-accent/60 active:bg-accent/80",
-                "transition-all duration-200 ease-out",
+                "flex items-center justify-center p-1 rounded-full",
+                "hover:bg-accent/60 active:bg-accent/80 transition-all",
                 "active:scale-95"
               )}
-              onClick={onCheckinClick}
-              aria-label="체크인"
+              onClick={onSearchClick}
+              aria-label="검색"
             >
-              <Play className="h-5 w-5 text-foreground" />
+              <Search className="h-7 w-7 text-foreground stroke-[2]" />
             </button>
           )}
-          {onArchiveClick && (
-            <button
-              className={cn(
-                "flex items-center justify-center w-10 h-10 rounded-full",
-                "hover:bg-accent/60 active:bg-accent/80",
-                "transition-all duration-200 ease-out",
-                "active:scale-95"
-              )}
-              onClick={onArchiveClick}
-              aria-label="기록실"
-            >
-              <Archive className="h-5 w-5 text-foreground" />
-            </button>
-          )}
-          {!hasActions && <div className="w-10" />}
         </div>
       </div>
     </header>

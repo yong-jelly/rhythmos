@@ -71,9 +71,9 @@ export function HomePage() {
   return (
     <div className="flex min-h-screen flex-col bg-background pb-32 bg-home-gradient">
       <Header 
-        title={user?.name ? `${user.name}님, ${getGreeting()}` : "Rhythm"}
-        onArchiveClick={() => navigate("/archives")}
         onAddClick={() => navigate("/pledge/new")}
+        onNotificationClick={() => {}}
+        onSearchClick={() => {}}
       />
 
       <main className="flex-1 max-w-2xl mx-auto w-full pt-6">

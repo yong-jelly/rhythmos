@@ -153,6 +153,7 @@ export function GroupChallengePage() {
       <Header
         title={challenge.title}
         subtitle={challenge.goal}
+        onBackClick={() => navigate(-1)}
       />
 
       {/* Challenge Stats Header */}
