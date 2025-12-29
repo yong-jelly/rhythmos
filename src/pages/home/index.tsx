@@ -69,7 +69,7 @@ export function HomePage() {
   const remainingTodos = todos.filter(t => !t.completed).length;
 
   return (
-    <div className="flex min-h-screen flex-col bg-background pb-32 bg-home-gradient">
+    <div className="flex min-h-screen flex-col bg-transparent pb-32">
       <Header 
         onAddClick={() => navigate("/pledge/new")}
         onNotificationClick={() => {}}
@@ -107,7 +107,7 @@ export function HomePage() {
         />
 
         {/* 함께하는 약속 카드 추가 */}
-        <div className="px-6 mb-8">
+        <div className="px-4 mb-8">
           <SharedPledgeCard 
             pledge={{
               id: "shared_1",

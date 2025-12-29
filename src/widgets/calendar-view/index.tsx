@@ -70,7 +70,7 @@ export function CalendarView({ selectedDate, onDateSelect }: CalendarViewProps) 
   };
 
   return (
-    <div className="bg-white py-2">
+    <div className="bg-transparent py-2">
       {/* 캘린더 상단 헤더: 연월 표시 및 오늘 이동 */}
       <div className="flex items-center justify-between mb-3 px-1">
         <h2 className="text-[14px] font-bold tracking-tight text-foreground/80">

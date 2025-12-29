@@ -147,7 +147,13 @@ export function DailyCheckinPage() {
   // 완료 화면
   if (isLastCard) {
     return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/95 backdrop-blur-sm">
+      <div 
+        className="fixed inset-0 z-50 flex items-center justify-center bg-background/95 backdrop-blur-sm"
+        style={{
+          backgroundImage: 'radial-gradient(circle, var(--border) 1px, transparent 1px)',
+          backgroundSize: '20px 20px'
+        }}
+      >
         <div className="max-w-md space-y-6 px-6 text-center animate-fade-in">
           <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-primary/10 animate-breathe">
             <CheckCircle className="h-10 w-10 text-primary" />
@@ -169,8 +175,14 @@ export function DailyCheckinPage() {
   // 사유 입력 화면
   if (showReasonInput && currentPledge) {
     return (
-      <div className="fixed inset-0 z-50 flex flex-col bg-background">
-        <header className="flex items-center justify-between border-b border-border/40 px-6 py-4 safe-area-top">
+      <div 
+        className="fixed inset-0 z-50 flex flex-col bg-background"
+        style={{
+          backgroundImage: 'radial-gradient(circle, var(--border) 1px, transparent 1px)',
+          backgroundSize: '20px 20px'
+        }}
+      >
+        <header className="flex items-center justify-between border-b border-border/40 px-4 py-4 safe-area-top">
           <Button
             variant="ghost"
             size="icon"
@@ -186,7 +198,7 @@ export function DailyCheckinPage() {
           <div className="w-10" />
         </header>
 
-        <main className="flex-1 overflow-auto px-6 py-6">
+        <main className="flex-1 overflow-auto px-4 py-6">
           <div className="mx-auto max-w-md space-y-6 animate-fade-in">
             <Card className="border-border/60 bg-card p-5">
               <h3 className="mb-2 font-medium text-card-foreground">{currentPledge.title}</h3>
@@ -225,7 +237,7 @@ export function DailyCheckinPage() {
           </div>
         </main>
 
-        <div className="border-t border-border/40 px-6 py-6 safe-area-bottom">
+        <div className="border-t border-border/40 px-4 py-6 safe-area-bottom">
           <Button
             size="xl"
             className="w-full rounded-full"
@@ -242,7 +254,7 @@ export function DailyCheckinPage() {
   if (!currentPledge) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex flex-col bg-background">
+    <div className="fixed inset-0 z-50 flex flex-col bg-background bg-dot-matrix">
       <header className="flex items-center justify-between border-b border-border/40 px-6 py-4 safe-area-top">
         <Button variant="ghost" size="icon" className="rounded-full" onClick={() => navigate(-1)}>
           <X className="h-5 w-5" />
@@ -256,7 +268,7 @@ export function DailyCheckinPage() {
         <div className="w-10" />
       </header>
 
-      <main className="relative flex flex-1 items-center justify-center overflow-hidden px-6 py-12">
+      <main className="relative flex flex-1 items-center justify-center overflow-hidden px-4 py-12">
         {/* Swipe indicators */}
         <div
           className="pointer-events-none absolute left-8 top-1/2 -translate-y-1/2 transition-opacity"
@@ -345,7 +357,7 @@ export function DailyCheckinPage() {
       </main>
 
       {/* Instructions */}
-      <div className="border-t border-border/40 bg-background/80 px-6 py-6 backdrop-blur-sm safe-area-bottom">
+      <div className="border-t border-border/40 bg-background/80 px-4 py-6 backdrop-blur-sm safe-area-bottom">
         <div className="mx-auto max-w-md space-y-4">
           <p className="text-center text-sm font-medium text-foreground">카드를 스와이프해서 체크하세요</p>
           <div className="grid grid-cols-2 gap-3">

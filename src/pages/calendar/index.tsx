@@ -9,7 +9,7 @@ export function CalendarPage() {
   const [selectedDate, setSelectedDate] = useState(new Date());
 
   return (
-    <div className="flex min-h-screen flex-col bg-background pb-32 bg-dot-matrix">
+    <div className="flex min-h-screen flex-col bg-transparent pb-32">
       <Header 
         title="달력" 
         onSearchClick={() => {}} 
@@ -18,7 +18,7 @@ export function CalendarPage() {
 
       <main className="flex-1 max-w-2xl mx-auto w-full pt-0">
         {/* Calendar Strip - Sticky and Flat */}
-        <div className="sticky top-[108px] z-20 px-4 py-2 bg-background border-b-[0.5px] border-border/40 transition-all">
+        <div className="sticky top-[108px] z-20 px-2 py-2 bg-background border-b-[0.5px] border-border/40 transition-all">
           <CalendarView 
             selectedDate={selectedDate} 
             onDateSelect={setSelectedDate} 
@@ -26,7 +26,7 @@ export function CalendarPage() {
         </div>
 
         {/* Categorized Content Section */}
-        <div className="px-4 pt-6">
+        <div className="px-2 pt-6">
           <CategorizedDailyList date={selectedDate} />
         </div>
       </main>

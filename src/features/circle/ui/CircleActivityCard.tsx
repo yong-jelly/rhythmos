@@ -19,7 +19,7 @@ export function CircleActivityCard({ type, user, content, timestamp }: CircleAct
   const navigate = useNavigate();
 
   return (
-    <div className="px-6 mb-8">
+    <div className="px-4 mb-8">
       <Card 
         onClick={() => navigate("/circle")}
         className="group bg-white border border-border/40 p-5 shadow-[0_4px_20px_rgba(0,0,0,0.02)] cursor-pointer active:scale-[0.99] transition-all rounded-[32px]"

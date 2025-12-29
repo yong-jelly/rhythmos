@@ -8,7 +8,7 @@ export function JourneyPage() {
   const navigate = useNavigate();
 
   return (
-    <div className="flex min-h-screen flex-col bg-background pb-28">
+    <div className="flex min-h-screen flex-col bg-transparent pb-28">
       <Header 
         title="여정" 
         subtitle="당신의 성장 기록"
@@ -16,7 +16,7 @@ export function JourneyPage() {
         onNotificationClick={() => {}}
       />
 
-      <main className="flex-1 px-5 py-8 max-w-4xl mx-auto w-full">
+      <main className="flex-1 px-4 py-8 max-w-4xl mx-auto w-full">
         <div className="mb-10">
           <h2 className="mb-5 text-xl font-semibold tracking-tight text-foreground">나의 여정</h2>
           <Card className="p-6">

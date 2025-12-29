@@ -149,7 +149,7 @@ export function GroupChallengePage() {
   const progressPercent = (challenge.currentDay / challenge.totalDays) * 100;
 
   return (
-    <div className="flex min-h-screen flex-col bg-background pb-28">
+    <div className="flex min-h-screen flex-col bg-transparent pb-28">
       <Header
         title={challenge.title}
         subtitle={challenge.goal}
@@ -158,7 +158,7 @@ export function GroupChallengePage() {
 
       {/* Challenge Stats Header */}
       <div className="border-b border-border/40 bg-gradient-to-br from-chart-2/10 to-transparent backdrop-blur-sm">
-        <div className="px-5 py-4 max-w-4xl mx-auto">
+        <div className="px-4 py-4 max-w-4xl mx-auto">
           <div className="mb-3 grid grid-cols-3 gap-2">
             <Card className={cn("p-3 text-center bg-background/60 backdrop-blur-sm", designSystem.shadow.card)}>
               <div className="mb-1 flex items-center justify-center gap-1">
@@ -213,8 +213,8 @@ export function GroupChallengePage() {
       </div>
 
       {/* View Tabs */}
-      <div className="sticky top-0 z-10 border-b border-border/40 bg-background/80 backdrop-blur-sm">
-        <div className="flex px-5 max-w-4xl mx-auto">
+      <div className="sticky top-[108px] z-10 border-b border-border/40 bg-background/80 backdrop-blur-sm">
+        <div className="flex px-4 max-w-4xl mx-auto">
           <button
             onClick={() => setSelectedView("overview")}
             className={cn(
@@ -251,7 +251,7 @@ export function GroupChallengePage() {
         </div>
       </div>
 
-      <main className="flex-1 px-5 py-6 max-w-4xl mx-auto w-full">
+      <main className="flex-1 px-4 py-6 max-w-4xl mx-auto w-full">
         {/* Overview View */}
         {selectedView === "overview" && (
           <div className="space-y-6">
@@ -572,7 +572,7 @@ export function GroupChallengePage() {
       </main>
 
       {/* Floating Action Button */}
-      <div className="sticky bottom-24 px-5 max-w-4xl mx-auto w-full">
+      <div className="sticky bottom-24 px-4 max-w-4xl mx-auto w-full">
         <Button size="lg" className={cn("w-full rounded-full", designSystem.shadow.elevation4)}>
           <CheckCircle2 className="mr-2 h-5 w-5" />
           오늘 체크인하기

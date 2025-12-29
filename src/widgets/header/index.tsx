@@ -30,8 +30,8 @@ export function Header({
   const hasActions = !!(onAddClick || onCheckinClick || onArchiveClick || onSearchClick || onNotificationClick);
   
   return (
-    <header className="sticky top-0 z-10 bg-background/95 backdrop-blur-xl safe-area-top">
-      <div className="flex items-start justify-between px-6 pt-8 pb-4 max-w-4xl mx-auto w-full">
+    <header className="sticky top-0 z-50 bg-background/95 backdrop-blur-xl safe-area-top">
+      <div className="flex items-start justify-between px-4 pt-8 pb-4 max-w-4xl mx-auto w-full">
         {/* 좌측 제목 - 과감한 타이포그래피 적용 */}
         <div className="flex flex-col gap-1">
           <div className="flex items-center gap-3">

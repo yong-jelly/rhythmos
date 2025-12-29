@@ -17,7 +17,7 @@ export function PledgeStack({ pledges }: PledgeStackProps) {
   };
 
   return (
-    <div className="w-full px-6 mb-12">
+    <div className="w-full px-4 mb-12">
       <div className="mb-5 flex items-end justify-between px-2">
         <h2 className="text-[20px] font-black tracking-tight text-slate-900">오늘의 리듬</h2>
         <span className="text-[12px] font-bold text-slate-400">

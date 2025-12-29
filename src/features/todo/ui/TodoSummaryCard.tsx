@@ -11,7 +11,7 @@ export function TodoSummaryCard({ remainingCount }: TodoSummaryCardProps) {
   const navigate = useNavigate();
 
   return (
-    <div className="px-6 mb-8">
+    <div className="px-4 mb-8">
       <Card 
         onClick={() => navigate("/calendar")}
         className="group relative overflow-hidden bg-white/80 backdrop-blur-md border border-white/40 shadow-[0_8px_32px_rgba(0,0,0,0.04)] p-6 cursor-pointer active:scale-[0.98] transition-all"
@@ -41,7 +41,7 @@ export function DelayedTodoCard({ count }: { count: number }) {
   if (count === 0) return null;
 
   return (
-    <div className="px-6 mb-8">
+    <div className="px-4 mb-8">
       <Card 
         onClick={() => navigate("/calendar")}
         className="relative overflow-hidden bg-warning/10 border border-warning/20 p-6 cursor-pointer active:scale-[0.98] transition-all"

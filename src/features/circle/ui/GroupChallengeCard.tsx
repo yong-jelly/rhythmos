@@ -29,7 +29,7 @@ export function GroupChallengeCard({ challenge, onClick }: GroupChallengeCardPro
     <Card 
       className={cn(
         "group relative overflow-hidden border-none shadow-[0_8px_30px_rgb(0,0,0,0.04)] transition-all duration-300 hover:shadow-[0_12px_40px_rgb(0,0,0,0.08)]",
-        "bg-white rounded-[32px] p-6 mb-8 mx-6"
+        "bg-white rounded-[32px] p-6 mb-8 mx-4"
       )}
       onClick={onClick}
     >

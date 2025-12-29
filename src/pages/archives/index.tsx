@@ -16,7 +16,7 @@ export function ArchivesPage() {
   }, [fetchMemories]);
 
   return (
-    <div className="flex min-h-screen flex-col bg-background pb-28">
+    <div className="flex min-h-screen flex-col bg-transparent pb-28">
       <Header 
         title="기록실" 
         subtitle="모든 기억들" 
@@ -24,7 +24,7 @@ export function ArchivesPage() {
         onSearchClick={() => {}}
       />
 
-      <main className="flex-1 px-5 py-8 max-w-4xl mx-auto w-full">
+      <main className="flex-1 px-4 py-8 max-w-4xl mx-auto w-full">
         <div className="mb-10">
           <h2 className="mb-5 text-xl font-semibold tracking-tight text-foreground">기억 모음</h2>
           {memories.length > 0 ? (

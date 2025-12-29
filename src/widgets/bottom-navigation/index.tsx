@@ -24,7 +24,7 @@ export function BottomNavigation() {
   ];
 
   return (
-    <nav className="fixed bottom-10 left-0 right-0 z-50 pointer-events-none flex justify-center px-6">
+    <nav className="fixed bottom-10 left-0 right-0 z-50 pointer-events-none flex justify-center px-4">
       <div className={cn(
         "pointer-events-auto flex flex-col items-center transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)]",
         isExpanded ? "gap-4" : "gap-0"

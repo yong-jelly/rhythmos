@@ -221,7 +221,7 @@ export function CirclePage() {
     ];
 
     return (
-      <div className="flex min-h-screen flex-col bg-background pb-28">
+      <div className="flex min-h-screen flex-col bg-transparent pb-28">
         <Header
           title={member.name}
           subtitle={member.statusText}
@@ -229,7 +229,7 @@ export function CirclePage() {
           onAddClick={() => navigate("/pledge/new")}
         />
 
-        <main className="flex-1 px-5 py-6 max-w-4xl mx-auto w-full">
+        <main className="flex-1 px-4 py-6 max-w-4xl mx-auto w-full">
           {/* Member Stats */}
           <div className="mb-6 grid grid-cols-3 gap-3">
             <Card className={cn("p-4", designSystem.shadow.card)}>
@@ -326,7 +326,7 @@ export function CirclePage() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col bg-background pb-28">
+    <div className="flex min-h-screen flex-col bg-transparent pb-28">
       <Header
         title="서클"
         subtitle="함께하는 사람들"

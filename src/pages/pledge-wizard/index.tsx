@@ -90,10 +90,10 @@ export function PledgeWizardPage() {
   };
 
   return (
-    <div className="flex min-h-screen flex-col bg-background">
+    <div className="flex min-h-screen flex-col bg-transparent">
       {/* Header */}
-      <header className="sticky top-0 z-10 border-b border-border/40 bg-background/80 backdrop-blur-sm safe-area-top">
-        <div className="px-6 py-4">
+      <header className="sticky top-0 z-50 border-b border-border/40 bg-background/80 backdrop-blur-sm safe-area-top">
+        <div className="px-4 py-4">
           <div className="mb-3 flex items-center justify-between">
             <Button variant="ghost" size="icon" className="rounded-full" onClick={() => navigate(-1)}>
               <X className="h-5 w-5" />
@@ -108,7 +108,7 @@ export function PledgeWizardPage() {
       </header>
 
       {/* Main Content */}
-      <main className="flex-1 overflow-y-auto px-6 py-8">
+      <main className="flex-1 overflow-y-auto px-4 py-8">
         {/* Intro Step */}
         {currentStep === "intro" && (
           <div className="mx-auto max-w-md space-y-6 animate-fade-in">
@@ -552,7 +552,7 @@ export function PledgeWizardPage() {
       </main>
 
       {/* Bottom Navigation */}
-      <div className="sticky bottom-0 border-t border-border/40 bg-background/80 px-6 py-4 backdrop-blur-sm safe-area-bottom">
+      <div className="sticky bottom-0 border-t border-border/40 bg-background/80 px-4 py-4 backdrop-blur-sm safe-area-bottom">
         <div className="mx-auto flex max-w-md items-center gap-3">
           {currentStepIndex > 0 && (
             <Button variant="outline" size="lg" className="h-12 flex-1 rounded-full bg-transparent" onClick={handleBack}>

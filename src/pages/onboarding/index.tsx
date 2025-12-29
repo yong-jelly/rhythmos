@@ -94,9 +94,9 @@ export function OnboardingPage() {
   };
 
   return (
-    <div className="flex min-h-screen flex-col bg-background">
+    <div className="flex min-h-screen flex-col bg-transparent">
       {/* Progress indicator */}
-      <div className="safe-area-top px-6 pt-4">
+      <div className="safe-area-top px-4 pt-4">
         <div className="flex items-center justify-between mb-2">
           <span className="text-xs text-muted-foreground">
             {currentStep + 1} / {onboardingSteps.length}
@@ -119,7 +119,7 @@ export function OnboardingPage() {
       </div>
 
       {/* Main content */}
-      <main className="flex flex-1 flex-col items-center justify-center px-6 py-8">
+      <main className="flex flex-1 flex-col items-center justify-center px-4 py-8">
         <div className="w-full max-w-sm space-y-8 animate-fade-in" key={currentStep}>
           {/* Icon */}
           <div className="flex justify-center">
@@ -175,7 +175,7 @@ export function OnboardingPage() {
       </main>
 
       {/* Bottom navigation */}
-      <div className="safe-area-bottom px-6 pb-6">
+      <div className="safe-area-bottom px-4 pb-6">
         <Button
           size="xl"
           className="w-full rounded-full"

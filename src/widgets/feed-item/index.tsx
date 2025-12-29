@@ -107,7 +107,7 @@ export function FeedItem({ user, content, stats, minimal = false }: FeedItemProp
   }
 
   return (
-    <div className="mb-10 px-6 group">
+    <div className="mb-10 px-4 group">
       {/* 1. 매니저 헤더 (Header) - 감성적인 카드 내부 통합 스타일로 변경 */}
       <div 
         className={cn(
