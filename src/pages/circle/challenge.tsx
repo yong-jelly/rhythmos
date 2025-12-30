@@ -53,7 +53,7 @@ export function GroupChallengePage() {
 
   // Mock data
   const challenge = {
-    title: "26년 다이어트 플랜",
+    title: "26년 다이어트 계획",
     goal: "함께 건강하게 10kg 감량",
     startDate: "2026-01-01",
     endDate: "2026-03-31",

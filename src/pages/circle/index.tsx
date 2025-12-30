@@ -147,7 +147,7 @@ export function CirclePage() {
   const groupChallenges: GroupChallenge[] = [
     {
       id: "1",
-      title: "26년 다이어트 플랜",
+      title: "26년 다이어트 계획",
       goal: "함께 건강하게 10kg 감량",
       participants: 5,
       activeParticipants: 4,

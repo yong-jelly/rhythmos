@@ -58,7 +58,7 @@ export function HomePage() {
 
   const tabs = [
     { id: "rhythm", label: "리듬" },
-    { id: "plan", label: "플랜" },
+    { id: "plan", label: "계획" },
     { id: "project", label: "프로젝트" },
     { id: "notification", label: "알림" },
   ];
@@ -113,13 +113,13 @@ export function HomePage() {
           <PledgeStack pledges={pledges} />
         )}
 
-        {/* 플랜 탭 */}
+        {/* 계획 탭 */}
         {activeTab === "plan" && (
           <>
             <GroupChallengeCard 
               challenge={{
                 id: "challenge_1",
-                title: "26년 다이어트 플랜",
+                title: "26년 다이어트 계획",
                 goal: "함께 건강하게 10kg 감량",
                 participants: [
                   { id: "u1", name: "민수", avatar: "민", color: "bg-blue-500" },

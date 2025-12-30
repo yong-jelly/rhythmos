@@ -21,6 +21,17 @@ export function BottomNavigation({ testPledges }: BottomNavigationProps) {
   
   // 테스트 데이터가 있으면 그것을 사용, 아니면 스토어 데이터 사용
   const pledges = testPledges || storePledges;
+
+  const params = new URLSearchParams(location.search);
+  const activeTab = params.get("tab") || "rhythm";
+
+  const getQuickActionLabel = () => {
+    switch (activeTab) {
+      case "plan": return "새 계획";
+      case "project": return "새 프로젝트";
+      default: return "새 약속";
+    }
+  };
   
   /** [상태] 메뉴 확장 여부 제어 */
   const [isExpanded, setIsExpanded] = useState(false);
@@ -188,9 +199,9 @@ export function BottomNavigation({ testPledges }: BottomNavigationProps) {
               <div className="flex items-center px-2 py-1 border-l border-border/50">
                 <button 
                   onClick={() => setIsWizardOpen(true)}
-                  className="px-4 py-2 text-[15px] font-bold text-foreground hover:bg-secondary rounded-full transition-colors"
+                  className="px-4 py-2 text-[15px] font-bold text-foreground hover:bg-secondary rounded-full transition-colors whitespace-nowrap"
                 >
-                  새 약속
+                  {getQuickActionLabel()}
                 </button>
                 {/* 사용자 아바타 (간편 프로필 이동) */}
                 <div 
