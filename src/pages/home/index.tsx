@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Header } from "@/widgets/header";
 import { BottomNavigation } from "@/widgets/bottom-navigation";
@@ -13,6 +13,7 @@ import { useRhythmStore } from "@/entities/rhythm";
 
 export function HomePage() {
   const navigate = useNavigate();
+  const { isWizardOpen, setIsWizardOpen } = usePledgeStore();
 
   const { user, fetchUser } = useUserStore();
   const { pledges, fetchPledges, getSlippedPledges } = usePledgeStore();
@@ -46,7 +47,7 @@ export function HomePage() {
   return (
     <div className="flex min-h-screen flex-col bg-transparent pb-32">
       <Header 
-        onAddClick={() => navigate("/pledge/new")}
+        onAddClick={() => setIsWizardOpen(true)}
         onNotificationClick={() => {}}
         onSearchClick={() => {}}
       />

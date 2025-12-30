@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { ChevronRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { PledgeStackCard } from "./PledgeStackCard";
 import { PledgeCheckIn } from "@/features/pledge-checkin";
 import type { Pledge } from "@/shared/types";
@@ -9,6 +11,7 @@ interface PledgeStackProps {
 }
 
 export function PledgeStack({ pledges }: PledgeStackProps) {
+  const navigate = useNavigate();
   const [selectedPledge, setSelectedPledge] = useState<Pledge | null>(null);
 
   const handleCheckIn = (type: string) => {
@@ -25,7 +28,7 @@ export function PledgeStack({ pledges }: PledgeStackProps) {
         </span>
       </div>
 
-      <div className="relative h-[260px] w-full">
+      <div className="relative h-[260px] w-full mb-6">
         <AnimatePresence mode="popLayout">
           {pledges.slice(0, 3).map((pledge, index) => (
             <motion.div
@@ -65,6 +68,16 @@ export function PledgeStack({ pledges }: PledgeStackProps) {
           </div>
         )}
       </div>
+
+      {pledges.length > 0 && (
+        <button
+          onClick={() => navigate("/pledges")}
+          className="w-full flex items-center justify-center gap-2 py-4 px-6 bg-secondary/50 hover:bg-secondary rounded-2xl text-[14px] font-bold text-foreground transition-all active:scale-[0.98]"
+        >
+          더 보기
+          <ChevronRight className="w-4 h-4" />
+        </button>
+      )}
 
       {selectedPledge && (
         <PledgeCheckIn 

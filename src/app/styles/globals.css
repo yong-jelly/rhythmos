@@ -2,11 +2,11 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* Pretendard 폰트 설정 */
+/* IBM Plex Sans KR 폰트 설정 */
 :root {
-  --font-pretendard: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto,
-    "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji",
-    "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+  --font-ibm-plex: "IBM Plex Sans KR", -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue",
+    "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol", sans-serif;
 
   /* Figma 스타일 플랫 컬러 팔레트 - 라인 기반, 명확한 구분 */
   --background: oklch(1 0 0); /* 순수 흰색 */
@@ -138,7 +138,7 @@
 }
 
 @theme inline {
-  --font-sans: var(--font-pretendard);
+  --font-sans: var(--font-ibm-plex);
   --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
 
   --color-background: var(--background);
@@ -322,8 +322,6 @@
     @apply bg-background text-foreground font-sans;
     background-image: radial-gradient(circle, var(--border) 1px, transparent 1px);
     background-size: 20px 20px;
-    font-feature-settings: "ss01", "ss02";
-    letter-spacing: -0.01em;
   }
 
   h1, h2, h3, h4, h5, h6 {

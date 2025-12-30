@@ -4,6 +4,7 @@ import { Header } from "@/widgets/header";
 import { BottomNavigation } from "@/widgets/bottom-navigation";
 import { Card, Button, Badge, Carousel, CarouselContent, CarouselItem } from "@/shared/ui";
 import { SharedPledgeCard } from "@/features/circle";
+import { usePledgeStore } from "@/entities/pledge";
 import {
   Users,
   Plus,
@@ -69,6 +70,7 @@ interface SupportMessage {
 
 export function CirclePage() {
   const navigate = useNavigate();
+  const { setIsWizardOpen } = usePledgeStore();
   const [selectedMember, setSelectedMember] = useState<string | null>(null);
   const [expandedSections, setExpandedSections] = useState<{ [key: string]: boolean }>({
     sharedPledges: true,
@@ -226,7 +228,7 @@ export function CirclePage() {
           title={member.name}
           subtitle={member.statusText}
           onBackClick={() => setSelectedMember(null)}
-          onAddClick={() => navigate("/pledge/new")}
+          onAddClick={() => setIsWizardOpen(true)}
         />
 
         <main className="flex-1 px-4 py-6 max-w-4xl mx-auto w-full">

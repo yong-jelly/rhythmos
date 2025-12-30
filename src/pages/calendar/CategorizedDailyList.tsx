@@ -3,6 +3,7 @@ import { CheckCircle2, Circle, ChevronRight, Plus, CalendarDays } from "lucide-r
 import { format } from "date-fns";
 import { ko } from "date-fns/locale";
 import { useNavigate } from "react-router-dom";
+import { usePledgeStore } from "@/entities/pledge";
 
 /**
  * CategorizedDailyList 컴포넌트 속성 정의
@@ -18,6 +19,7 @@ interface CategorizedDailyListProps {
  */
 export function CategorizedDailyList({ date }: CategorizedDailyListProps) {
   const navigate = useNavigate();
+  const { setIsWizardOpen } = usePledgeStore();
 
   /**
    * [설계 데이터] 날짜별 데이터 패칭 시뮬레이션 (추후 Store 연동 지점)
@@ -88,7 +90,7 @@ export function CategorizedDailyList({ date }: CategorizedDailyListProps) {
           밀린 기록을 복원하여 일상을 채워보세요.
         </p>
         <button 
-          onClick={() => navigate("/pledge/new")}
+          onClick={() => setIsWizardOpen(true)}
           className="flex items-center gap-2 px-6 py-3.5 bg-foreground text-background rounded-full text-[15px] font-bold transition-all active:scale-95 shadow-sm"
         >
           <Plus className="w-4 h-4" />

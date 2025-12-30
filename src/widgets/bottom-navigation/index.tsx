@@ -2,6 +2,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { cn } from "@/shared/lib/utils";
 import { useState } from "react";
 import { Plus, X } from "lucide-react";
+import { usePledgeStore } from "@/entities/pledge";
 
 /**
  * [기능] 텍스트 중심의 확장형 플로팅 내비게이션 바
@@ -10,6 +11,7 @@ import { Plus, X } from "lucide-react";
 export function BottomNavigation() {
   const navigate = useNavigate();
   const location = useLocation();
+  const { setIsWizardOpen } = usePledgeStore();
   
   /** [상태] 메뉴 확장 여부 제어 */
   const [isExpanded, setIsExpanded] = useState(false);
@@ -82,7 +84,7 @@ export function BottomNavigation() {
           {!isExpanded && (
             <div className="flex items-center px-2 py-1 ml-1 border-l border-border/50">
               <button 
-                onClick={() => navigate("/pledge/new")}
+                onClick={() => setIsWizardOpen(true)}
                 className="px-4 py-2 text-[15px] font-bold text-foreground hover:bg-secondary rounded-full transition-colors"
               >
                 새 약속

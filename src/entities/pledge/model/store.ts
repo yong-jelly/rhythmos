@@ -5,14 +5,17 @@ import { get_pledges_active } from "@/shared/api/mocks";
 interface PledgeState {
   pledges: Pledge[];
   isLoading: boolean;
+  isWizardOpen: boolean;
   fetchPledges: () => void;
   getPledgeById: (id: string) => Pledge | undefined;
   getSlippedPledges: () => Pledge[];
+  setIsWizardOpen: (isOpen: boolean) => void;
 }
 
 export const usePledgeStore = create<PledgeState>((set, get) => ({
   pledges: [],
   isLoading: false,
+  isWizardOpen: false,
   fetchPledges: () => {
     set({ isLoading: true });
     const pledges = get_pledges_active();
@@ -27,6 +30,9 @@ export const usePledgeStore = create<PledgeState>((set, get) => ({
       const recentEvents = p.currentRun.events.slice(-3);
       return recentEvents.some((e) => e.type === "skip");
     });
+  },
+  setIsWizardOpen: (isOpen) => {
+    set({ isWizardOpen: isOpen });
   },
 }));
 

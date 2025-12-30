@@ -7,8 +7,11 @@ import { GroupChallengePage } from "@/pages/circle/challenge";
 import { ArchivesPage } from "@/pages/archives";
 import { CalendarPage } from "@/pages/calendar";
 import { PledgeWizardPage } from "@/pages/pledge-wizard";
+import { PledgeListPage } from "@/pages/pledges";
 import { DailyCheckinPage } from "@/pages/daily-checkin";
 import { RepairFlowPage } from "@/pages/repair-flow";
+import { PledgeWizardModal } from "@/widgets/modal/PledgeWizardModal";
+import { usePledgeStore } from "@/entities/pledge";
 
 // 라우터 디버깅을 위한 컴포넌트
 function RouterDebug() {
@@ -25,6 +28,8 @@ function ErrorBoundary({ children }: { children: React.ReactNode }) {
 }
 
 export function AppRouter() {
+  const { isWizardOpen, setIsWizardOpen } = usePledgeStore();
+
   useEffect(() => {
     console.log("[Router] AppRouter mounted");
   }, []);
@@ -40,6 +45,7 @@ export function AppRouter() {
         <Route path="/circle/challenge/:id" element={<GroupChallengePage />} />
         <Route path="/archives" element={<ArchivesPage />} />
         <Route path="/calendar" element={<CalendarPage />} />
+        <Route path="/pledges" element={<PledgeListPage />} />
         <Route path="/pledge/new" element={<PledgeWizardPage />} />
         <Route path="/checkin" element={<DailyCheckinPage />} />
         <Route path="/repair" element={<RepairFlowPage />} />
@@ -56,6 +62,15 @@ export function AppRouter() {
           }
         />
       </Routes>
+
+      <PledgeWizardModal 
+        isOpen={isWizardOpen} 
+        onClose={() => setIsWizardOpen(false)}
+        onComplete={(data) => {
+          console.log("Wizard completed", data);
+          setIsWizardOpen(false);
+        }}
+      />
     </ErrorBoundary>
   );
 }
