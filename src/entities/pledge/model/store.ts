@@ -6,16 +6,19 @@ interface PledgeState {
   pledges: Pledge[];
   isLoading: boolean;
   isWizardOpen: boolean;
+  checkInTarget: Pledge | null;
   fetchPledges: () => void;
   getPledgeById: (id: string) => Pledge | undefined;
   getSlippedPledges: () => Pledge[];
   setIsWizardOpen: (isOpen: boolean) => void;
+  setCheckInTarget: (target: Pledge | null) => void;
 }
 
 export const usePledgeStore = create<PledgeState>((set, get) => ({
   pledges: [],
   isLoading: false,
   isWizardOpen: false,
+  checkInTarget: null,
   fetchPledges: () => {
     set({ isLoading: true });
     const pledges = get_pledges_active();
@@ -33,6 +36,9 @@ export const usePledgeStore = create<PledgeState>((set, get) => ({
   },
   setIsWizardOpen: (isOpen) => {
     set({ isWizardOpen: isOpen });
+  },
+  setCheckInTarget: (target) => {
+    set({ checkInTarget: target });
   },
 }));
 

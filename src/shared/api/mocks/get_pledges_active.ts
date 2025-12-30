@@ -27,6 +27,7 @@ export const get_pledges_active = (): Pledge[] => [
         { id: "event_3", runId: "run_1", date: "2024-12-20", type: "skip", reason: "피로" },
         { id: "event_4", runId: "run_1", date: "2024-12-21", type: "success", note: "창밖에 눈이 내리고 있었다" },
         { id: "event_5", runId: "run_1", date: "2024-12-22", type: "success" },
+        { id: "event_today_1", runId: "run_1", date: new Date().toISOString().split('T')[0], type: "success" },
       ],
     },
     returnHistory: [
@@ -64,6 +65,58 @@ export const get_pledges_active = (): Pledge[] => [
     returnHistory: [{ id: "return_3", pledgeId: "pledge_2", date: "2024-12-20", gapDays: 0 }],
     createdAt: "2024-12-20T00:00:00Z",
   },
+  {
+    id: "pledge_3",
+    title: "매일 물 2L 마시기",
+    meaning: "몸의 순환을 돕기 위해",
+    action: "텀블러 4번 비우기",
+    frequency: "daily",
+    shareWith: "myself",
+    status: "active",
+    currentRun: {
+      id: "run_3",
+      pledgeId: "pledge_3",
+      number: 1,
+      startDate: "2024-12-25",
+      targetDays: 30,
+      completedDays: 6,
+      events: [
+        { id: "e3_1", runId: "run_3", date: "2024-12-25", type: "success" },
+        { id: "e3_2", runId: "run_3", date: "2024-12-26", type: "success" },
+        { id: "e3_3", runId: "run_3", date: "2024-12-27", type: "success" },
+        { id: "e3_4", runId: "run_3", date: "2024-12-28", type: "success" },
+        { id: "e3_5", runId: "run_3", date: "2024-12-29", type: "success" },
+        { id: "e3_6", runId: "run_3", date: "2024-12-30", type: "success" },
+        { id: "event_today_3", runId: "run_3", date: new Date().toISOString().split('T')[0], type: "success" },
+      ],
+    },
+    returnHistory: [],
+    createdAt: "2024-12-25T00:00:00Z",
+  },
+  {
+    id: "pledge_4",
+    title: "스쿼트 50개 하기",
+    meaning: "하체 근력을 키우기 위해",
+    action: "자기 전 스쿼트 50개",
+    frequency: "daily",
+    shareWith: "myself",
+    status: "active",
+    currentRun: {
+      id: "run_4",
+      pledgeId: "pledge_4",
+      number: 1,
+      startDate: "2024-12-28",
+      targetDays: 21,
+      completedDays: 3,
+      events: [
+        { id: "e4_1", runId: "run_4", date: "2024-12-28", type: "success" },
+        { id: "e4_2", runId: "run_4", date: "2024-12-29", type: "success" },
+        { id: "e4_3", runId: "run_4", date: "2024-12-30", type: "success" },
+      ],
+    },
+    returnHistory: [],
+    createdAt: "2024-12-28T00:00:00Z",
+  }
 ];
 
 
