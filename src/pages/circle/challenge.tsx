@@ -149,7 +149,7 @@ export function GroupChallengePage() {
   const progressPercent = (challenge.currentDay / challenge.totalDays) * 100;
 
   return (
-    <div className="flex min-h-screen flex-col bg-transparent pb-28">
+    <div className="flex min-h-[100dvh] flex-col bg-transparent pb-28">
       <Header
         title={challenge.title}
         subtitle={challenge.goal}

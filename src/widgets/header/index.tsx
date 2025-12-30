@@ -97,27 +97,21 @@ export function Header({
           </div>
         </div>
 
-        {/* 필터 탭 - 인스타그램 스타일 (절제된 깔끔함) */}
+        {/* 필터 탭 - 세그먼트 스타일로 변경하여 시인성 및 버그 수정 */}
         {tabs && tabs.length > 0 && (
-          <div className="flex items-center gap-6 px-5 pb-3">
+          <div className="flex items-center gap-2 px-4 pb-4">
             {tabs.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => onTabChange?.(tab.id)}
                 className={cn(
-                  "text-[15px] font-bold transition-all relative py-1",
+                  "px-4 py-1.5 rounded-full text-[14px] font-bold transition-all whitespace-nowrap",
                   activeTab === tab.id 
-                    ? "text-foreground" 
-                    : "text-muted-foreground/40 hover:text-muted-foreground/70"
+                    ? "bg-foreground text-background shadow-sm" 
+                    : "bg-secondary/50 text-muted-foreground hover:bg-secondary/80 hover:text-foreground"
                 )}
               >
                 {tab.label}
-                {activeTab === tab.id && (
-                  <motion.div 
-                    layoutId="header-tab-underline"
-                    className="absolute -bottom-[2px] left-0 right-0 h-[2px] bg-foreground rounded-full"
-                  />
-                )}
               </button>
             ))}
           </div>

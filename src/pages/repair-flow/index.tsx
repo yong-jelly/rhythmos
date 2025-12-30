@@ -89,7 +89,7 @@ export function RepairFlowPage() {
 
   if (!pledge) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-background px-6">
+      <div className="flex min-h-[100dvh] items-center justify-center bg-background px-6">
         <div className="text-center">
           <p className="text-muted-foreground">회복할 약속이 없습니다.</p>
           <Button className="mt-4" onClick={() => navigate("/home")}>
@@ -101,7 +101,7 @@ export function RepairFlowPage() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col bg-transparent">
+    <div className="flex min-h-[100dvh] flex-col bg-transparent">
       {/* Header */}
       <header className="sticky top-0 z-50 border-b border-border/40 bg-background/80 backdrop-blur-sm safe-area-top">
         <div className="px-4 py-4">

@@ -10,6 +10,7 @@ import { usePledgeStore } from "@/entities/pledge";
 import { useTodoStore } from "@/entities/todo";
 import { useMemoryStore } from "@/entities/memory";
 import { useRhythmStore } from "@/entities/rhythm";
+import { cn } from "@/shared/lib/utils";
 
 export function HomePage() {
   const navigate = useNavigate();
@@ -19,10 +20,25 @@ export function HomePage() {
   const { isWizardOpen, setIsWizardOpen } = usePledgeStore();
 
   const { user, fetchUser } = useUserStore();
-  const { pledges, fetchPledges, getSlippedPledges } = usePledgeStore();
+  const { pledges: originalPledges, fetchPledges, getSlippedPledges } = usePledgeStore();
   const { todos, fetchTodos } = useTodoStore();
   const { fetchMemories, getRecentMemory } = useMemoryStore();
   const { fetchStatus } = useRhythmStore();
+
+  // 테스트를 위한 상태
+  const [testMode, setTestMode] = useState<"none" | "completed" | "normal">("normal");
+
+  const pledges = testMode === "none" 
+    ? [] 
+    : testMode === "completed" 
+      ? originalPledges.map(p => ({
+          ...p,
+          currentRun: {
+            ...p.currentRun,
+            events: [...p.currentRun.events, { date: new Date().toISOString().split('T')[0], type: "success" as const }]
+          }
+        }))
+      : originalPledges;
 
   const setActiveTab = (tabId: string) => {
     setSearchParams({ tab: tabId });
@@ -59,7 +75,7 @@ export function HomePage() {
   const remainingTodos = todos.filter(t => !t.completed).length;
 
   return (
-    <div className="flex min-h-screen flex-col bg-transparent pb-32">
+    <div className="flex min-h-[100dvh] flex-col bg-transparent pb-32">
       <Header 
         onAddClick={() => setIsWizardOpen(true)}
         onNotificationClick={() => {}}
@@ -70,6 +86,28 @@ export function HomePage() {
       />
 
       <main className="flex-1 max-w-2xl mx-auto w-full pt-6">
+        {/* 테스트 컨트롤 바 */}
+        <div className="flex justify-end gap-2 px-4 mb-4">
+          <button 
+            onClick={() => setTestMode(testMode === "none" ? "normal" : "none")}
+            className={cn(
+              "px-3 py-1 text-[11px] font-bold rounded-full border transition-colors",
+              testMode === "none" ? "bg-slate-900 text-white border-slate-900" : "bg-white text-slate-400 border-slate-200"
+            )}
+          >
+            없음
+          </button>
+          <button 
+            onClick={() => setTestMode(testMode === "completed" ? "normal" : "completed")}
+            className={cn(
+              "px-3 py-1 text-[11px] font-bold rounded-full border transition-colors",
+              testMode === "completed" ? "bg-emerald-600 text-white border-emerald-600" : "bg-white text-slate-400 border-slate-200"
+            )}
+          >
+            완료
+          </button>
+        </div>
+
         {/* 리듬 탭 */}
         {activeTab === "rhythm" && (
           <PledgeStack pledges={pledges} />
@@ -192,7 +230,7 @@ export function HomePage() {
         )}
       </main>
 
-      <BottomNavigation />
+      <BottomNavigation testPledges={pledges} />
     </div>
   );
 }

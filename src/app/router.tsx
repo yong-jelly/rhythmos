@@ -53,7 +53,7 @@ export function AppRouter() {
         <Route
           path="*"
           element={
-            <div className="flex min-h-screen items-center justify-center">
+            <div className="flex min-h-[100dvh] items-center justify-center">
               <div className="text-center">
                 <h1 className="text-2xl font-bold">404</h1>
                 <p className="text-muted-foreground">페이지를 찾을 수 없습니다</p>

@@ -1,22 +1,30 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import { cn } from "@/shared/lib/utils";
 import { useState, useEffect } from "react";
-import { Plus, X, Check } from "lucide-react";
+import { Plus, X, Check, PenLine } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { usePledgeStore } from "@/entities/pledge";
+import type { Pledge } from "@/shared/types";
 
 /**
  * [기능] 텍스트 중심의 확장형 플로팅 내비게이션 바
  * [의도] 단순한 메뉴를 넘어 커맨드 센터 역할을 수행하며, 인터랙션을 통해 추가적인 액션을 노출
  */
-export function BottomNavigation() {
+interface BottomNavigationProps {
+  testPledges?: Pledge[];
+}
+
+export function BottomNavigation({ testPledges }: BottomNavigationProps) {
   const navigate = useNavigate();
   const location = useLocation();
-  const { pledges, setCheckInTarget, setIsWizardOpen } = usePledgeStore();
+  const { pledges: storePledges, setCheckInTarget, setIsWizardOpen } = usePledgeStore();
+  
+  // 테스트 데이터가 있으면 그것을 사용, 아니면 스토어 데이터 사용
+  const pledges = testPledges || storePledges;
   
   /** [상태] 메뉴 확장 여부 제어 */
   const [isExpanded, setIsExpanded] = useState(false);
-  const [showCheckIn, setShowCheckIn] = useState(false);
+  const [checkInState, setCheckInState] = useState<"hidden" | "active" | "completed">("hidden");
 
   /** [효과] /home 의 리듬 탭 일 때 0.5초 후 체크인 버튼 노출 */
   useEffect(() => {
@@ -24,9 +32,13 @@ export function BottomNavigation() {
     const currentTab = params.get("tab") || "rhythm";
     
     if (location.pathname === "/home" && currentTab === "rhythm") {
-      setShowCheckIn(false);
       const timer = setTimeout(() => {
-        // 아직 오늘 체크인하지 않은 첫 번째 리듬 확인
+        // 리듬이 하나도 없으면 체크인 관련 버튼을 아예 숨김
+        if (pledges.length === 0) {
+          setCheckInState("hidden");
+          return;
+        }
+
         const hasIncompletePledge = pledges.some(p => {
           const isCompletedToday = p.currentRun.events.some(
             e => e.date === new Date().toISOString().split('T')[0] && e.type === "success"
@@ -34,17 +46,19 @@ export function BottomNavigation() {
           return !isCompletedToday;
         });
         
-        if (hasIncompletePledge) {
-          setShowCheckIn(true);
-        }
+        setCheckInState(hasIncompletePledge ? "active" : "completed");
       }, 500);
       return () => clearTimeout(timer);
     } else {
-      setShowCheckIn(false);
+      setCheckInState("hidden");
     }
   }, [location.pathname, location.search, pledges]);
 
   const handleCheckInClick = () => {
+    if (checkInState === "completed") {
+      navigate("/daily-checkin");
+      return;
+    }
     const target = pledges.find(p => {
       const isCompletedToday = p.currentRun.events.some(
         e => e.date === new Date().toISOString().split('T')[0] && e.type === "success"
@@ -124,7 +138,7 @@ export function BottomNavigation() {
             {/* [추가] 체크인 버튼 - 메뉴와 새 약속 사이에 배치 */}
             {!isExpanded && (
               <AnimatePresence>
-                {showCheckIn && (
+                {checkInState !== "hidden" && (
                   <motion.div
                     initial={{ width: 0, opacity: 0 }}
                     animate={{ width: "auto", opacity: 1 }}
@@ -145,10 +159,24 @@ export function BottomNavigation() {
                         ease: "easeOut"
                       }}
                       onClick={handleCheckInClick}
-                      className="flex items-center gap-2 bg-red-500 text-white rounded-full px-5 py-3 ml-1 transition-all active:scale-95 whitespace-nowrap"
+                      className={cn(
+                        "flex items-center gap-2 rounded-full px-5 py-3 ml-1 transition-all active:scale-95 whitespace-nowrap",
+                        checkInState === "active" && "bg-red-500 text-white shadow-lg shadow-red-500/20",
+                        checkInState === "completed" && "bg-emerald-50 text-emerald-600 border border-emerald-100"
+                      )}
                     >
-                      <Check className="w-4 h-4 stroke-[3]" />
-                      <span className="text-[15px] font-black tracking-tight">체크인</span>
+                      {checkInState === "active" && (
+                        <>
+                          <Check className="w-4 h-4 stroke-[3]" />
+                          <span className="text-[15px] font-black tracking-tight">체크인</span>
+                        </>
+                      )}
+                      {checkInState === "completed" && (
+                        <>
+                          <Check className="w-4 h-4 stroke-[3]" />
+                          <span className="text-[15px] font-bold tracking-tight">완료됨</span>
+                        </>
+                      )}
                     </motion.button>
                   </motion.div>
                 )}

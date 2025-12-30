@@ -285,14 +285,6 @@
     @apply bg-background/60 backdrop-blur-xl border-b border-border/40;
   }
 
-  .scrollbar-hide {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none;
-  }
-
   .flat-rhythm {
     @apply bg-primary;
   }
@@ -309,6 +301,12 @@
 @layer base {
   * {
     @apply border-border/40 outline-ring/50;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+
+  *::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
   }
 
   html {
@@ -465,25 +463,5 @@
 
 .safe-area-bottom {
   padding-bottom: env(safe-area-inset-bottom);
-}
-
-/* 스크롤바 스타일링 */
-::-webkit-scrollbar {
-  width: 4px;
-  height: 4px;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--muted-foreground);
-  border-radius: 2px;
-  opacity: 0.3;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  opacity: 0.5;
 }
 

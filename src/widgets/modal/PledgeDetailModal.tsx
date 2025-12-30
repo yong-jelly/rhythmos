@@ -81,10 +81,10 @@ export function PledgeDetailModal({ pledge, isOpen, onClose }: PledgeDetailModal
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: "100%" }}
             transition={{ type: "spring", damping: 25, stiffness: 200 }}
-            className="relative w-full h-[94vh] md:w-[460px] md:h-auto md:max-h-[90vh] rounded-t-[40px] md:rounded-[40px] shadow-2xl overflow-hidden bg-[#F8F9FB] flex flex-col"
+            className="relative w-full h-[92dvh] md:w-[460px] md:h-auto md:max-h-[90vh] rounded-t-[40px] md:rounded-[40px] shadow-2xl overflow-hidden bg-[#F8F9FB] flex flex-col"
           >
             {/* 상단 네비게이션 - 투명 헤더 */}
-            <header className="shrink-0 z-20 absolute top-0 left-0 right-0">
+            <header className="shrink-0 z-20 absolute top-0 left-0 right-0 safe-area-top">
               <div className="px-6 py-5 flex items-center justify-between">
                 <button 
                   onClick={onClose} 

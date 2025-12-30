@@ -16,7 +16,7 @@ export function ArchivesPage() {
   }, [fetchMemories]);
 
   return (
-    <div className="flex min-h-screen flex-col bg-transparent pb-28">
+    <div className="flex min-h-[100dvh] flex-col bg-transparent pb-28">
       <Header 
         title="기록실" 
         subtitle="모든 기억들" 

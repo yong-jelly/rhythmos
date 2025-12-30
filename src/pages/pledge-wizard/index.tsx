@@ -90,7 +90,7 @@ export function PledgeWizardPage() {
   };
 
   return (
-    <div className="flex min-h-screen flex-col bg-[#F8FAFC]">
+    <div className="flex min-h-[100dvh] flex-col bg-[#F8FAFC]">
       {/* Header */}
       <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md safe-area-top border-b border-slate-100">
         <div className="px-6 py-4">

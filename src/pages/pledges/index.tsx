@@ -15,7 +15,7 @@ export function PledgeListPage() {
   }, [fetchPledges]);
 
   return (
-    <div className="flex min-h-screen flex-col bg-transparent pb-32">
+    <div className="flex min-h-[100dvh] flex-col bg-transparent pb-32">
       <Header 
         title="나의 약속" 
         subtitle="진행 중인 모든 리듬"

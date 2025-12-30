@@ -8,7 +8,7 @@ export function JourneyPage() {
   const navigate = useNavigate();
 
   return (
-    <div className="flex min-h-screen flex-col bg-transparent pb-28">
+    <div className="flex min-h-[100dvh] flex-col bg-transparent pb-28">
       <Header 
         title="여정" 
         subtitle="당신의 성장 기록"

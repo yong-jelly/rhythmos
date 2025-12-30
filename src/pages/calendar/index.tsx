@@ -9,7 +9,7 @@ export function CalendarPage() {
   const [selectedDate, setSelectedDate] = useState(new Date());
 
   return (
-    <div className="flex min-h-screen flex-col bg-transparent pb-32">
+    <div className="flex min-h-[100dvh] flex-col bg-transparent pb-32">
       <Header 
         title="달력" 
         onSearchClick={() => {}} 
