@@ -233,18 +233,18 @@ export function PledgeWizardModal({ isOpen, onClose, onComplete }: PledgeWizardM
                   transition={{ duration: 0.2 }}
                   className="space-y-3"
                 >
-                  <div className="flex items-center gap-2 mb-1">
+                      <div className="flex items-center gap-2 mb-1">
                     <span className="text-[14px] font-bold text-primary uppercase tracking-wider px-2 py-0.5 bg-primary/10 rounded-md">
                       {currentStep === "definition" && "시작하기 (1/3)"}
                       {currentStep === "rhythm" && "계획하기 (2/3)"}
                       {currentStep === "identity" && "선언하기 (3/3)"}
                     </span>
-                  </div>
+                      </div>
                   <h2 className="text-[30px] font-black leading-tight tracking-tight text-slate-900">
                     {currentStep === "definition" && <>어떤 리듬을<br />만들고 싶나요?</>}
                     {currentStep === "rhythm" && <>언제 실행하고<br />어떻게 돌아올까요?</>}
                     {currentStep === "identity" && <>이 약속은 어떤<br />나를 만드나요?</>}
-                  </h2>
+                      </h2>
                 </motion.div>
               </AnimatePresence>
 
@@ -257,15 +257,14 @@ export function PledgeWizardModal({ isOpen, onClose, onComplete }: PledgeWizardM
                       {currentSubStepIndex >= 1 && (
                         <motion.div
                           key="why"
-                          initial={{ opacity: 0, y: -20 }}
+                          initial={{ opacity: 0 }}
                           animate={{ 
                             opacity: 1, 
-                            y: 0,
                             scale: currentSubStepIndex === 1 ? 1 : 0.98,
                             filter: currentSubStepIndex === 1 ? "none" : "grayscale(0.5) opacity(0.5)"
                           }}
-                          exit={{ opacity: 0, y: -20 }}
-                          layout
+                          exit={{ opacity: 0 }}
+                          transition={{ duration: 0.2 }}
                           onClick={() => currentSubStepIndex > 1 && setCurrentSubStepIndex(1)}
                           className={cn("space-y-5", currentSubStepIndex > 1 && "cursor-pointer")}
                         >
@@ -274,12 +273,12 @@ export function PledgeWizardModal({ isOpen, onClose, onComplete }: PledgeWizardM
                             currentSubStepIndex === 1 ? "text-[22px] font-bold text-slate-900" : "text-[16px] font-medium text-slate-400"
                           )}>
                             왜 중요한가요?
-                          </label>
-                          <Input
-                            autoFocus
-                            placeholder="이 약속이 나에게 주는 의미..."
-                            value={pledgeData.why}
-                            onChange={(e) => updateData("why", e.target.value)}
+                        </label>
+                        <Input
+                          autoFocus
+                          placeholder="이 약속이 나에게 주는 의미..."
+                          value={pledgeData.why}
+                          onChange={(e) => updateData("why", e.target.value)}
                             onKeyDown={(e) => {
                               if (e.nativeEvent.isComposing) return;
                               if (e.key === "Enter") {
@@ -287,33 +286,33 @@ export function PledgeWizardModal({ isOpen, onClose, onComplete }: PledgeWizardM
                                 if (pledgeData.why.trim()) handleNext();
                               }
                             }}
-                            className={cn(
+                          className={cn(
                               "h-14 text-[17px] font-medium rounded-2xl border-none transition-all placeholder:text-slate-400 px-4",
-                              pledgeData.why.trim() !== "" ? "bg-primary/5 ring-1 ring-primary/20" : "bg-slate-50 focus:bg-white focus:ring-2 focus:ring-slate-900"
-                            )}
+                            pledgeData.why.trim() !== "" ? "bg-primary/5 ring-1 ring-primary/20" : "bg-slate-50 focus:bg-white focus:ring-2 focus:ring-slate-900"
+                          )}
                             readOnly={currentSubStepIndex > 1}
-                          />
+                        />
                           {currentSubStepIndex === 1 && (
-                            <div className="flex flex-wrap gap-2 pt-1">
-                              {whyExamples.map((ex) => (
-                                <button
-                                  key={ex}
+                        <div className="flex flex-wrap gap-2 pt-1">
+                          {whyExamples.map((ex) => (
+                            <button
+                              key={ex}
                                   onClick={(e) => {
                                     e.stopPropagation();
                                     updateData("why", ex);
                                     setTimeout(handleNext, 100);
                                   }}
-                                  className={cn(
-                                    "px-3 py-1.5 text-[14px] font-medium rounded-full transition-all",
-                                    pledgeData.why === ex 
-                                      ? "bg-slate-900 text-white shadow-sm" 
-                                      : "bg-white border border-slate-200 text-slate-700 active:scale-95 hover:bg-slate-50"
-                                  )}
-                                >
-                                  {ex}
-                                </button>
-                              ))}
-                            </div>
+                              className={cn(
+                                "px-3 py-1.5 text-[14px] font-medium rounded-full transition-all",
+                                pledgeData.why === ex 
+                                  ? "bg-slate-900 text-white shadow-sm" 
+                                  : "bg-white border border-slate-200 text-slate-700 active:scale-95 hover:bg-slate-50"
+                              )}
+                            >
+                              {ex}
+                            </button>
+                          ))}
+                        </div>
                           )}
                         </motion.div>
                       )}
@@ -321,14 +320,14 @@ export function PledgeWizardModal({ isOpen, onClose, onComplete }: PledgeWizardM
                       {/* 1. 약속 이름 (Moves down as index increases) */}
                       <motion.div
                         key="title"
-                        initial={{ opacity: 0, y: 20 }}
+                        initial={{ opacity: 0 }}
                         animate={{ 
                           opacity: 1, 
-                          y: 0,
                           scale: currentSubStepIndex === 0 ? 1 : 0.98,
                           filter: currentSubStepIndex === 0 ? "none" : "grayscale(0.5) opacity(0.5)"
                         }}
-                        layout
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.2 }}
                         onClick={() => currentSubStepIndex > 0 && setCurrentSubStepIndex(0)}
                         className={cn("space-y-5", currentSubStepIndex > 0 && "cursor-pointer")}
                       >
@@ -366,15 +365,14 @@ export function PledgeWizardModal({ isOpen, onClose, onComplete }: PledgeWizardM
                       {currentSubStepIndex >= 3 && (
                         <motion.div
                           key="repair"
-                          initial={{ opacity: 0, y: -20 }}
+                          initial={{ opacity: 0 }}
                           animate={{ 
                             opacity: 1, 
-                            y: 0,
                             scale: currentSubStepIndex === 3 ? 1 : 0.98,
                             filter: currentSubStepIndex === 3 ? "none" : "grayscale(0.5) opacity(0.5)"
                           }}
-                          exit={{ opacity: 0, y: -20 }}
-                          layout
+                          exit={{ opacity: 0 }}
+                          transition={{ duration: 0.2 }}
                           onClick={() => currentSubStepIndex > 3 && setCurrentSubStepIndex(3)}
                           className={cn("space-y-5", currentSubStepIndex > 3 && "cursor-pointer")}
                         >
@@ -422,7 +420,7 @@ export function PledgeWizardModal({ isOpen, onClose, onComplete }: PledgeWizardM
                                   {idea}
                                 </button>
                               ))}
-                            </div>
+                      </div>
                           )}
                         </motion.div>
                       )}
@@ -431,15 +429,14 @@ export function PledgeWizardModal({ isOpen, onClose, onComplete }: PledgeWizardM
                       {currentSubStepIndex >= 2 && (
                         <motion.div
                           key="endDate"
-                          initial={{ opacity: 0, y: -20 }}
+                          initial={{ opacity: 0 }}
                           animate={{ 
                             opacity: 1, 
-                            y: 0,
                             scale: currentSubStepIndex === 2 ? 1 : 0.98,
                             filter: currentSubStepIndex === 2 ? "none" : "grayscale(0.5) opacity(0.5)"
                           }}
-                          exit={{ opacity: 0, y: -20 }}
-                          layout
+                          exit={{ opacity: 0 }}
+                          transition={{ duration: 0.2 }}
                           onClick={() => currentSubStepIndex > 2 && setCurrentSubStepIndex(2)}
                           className={cn("space-y-5", currentSubStepIndex > 2 && "cursor-pointer")}
                         >
@@ -453,7 +450,10 @@ export function PledgeWizardModal({ isOpen, onClose, onComplete }: PledgeWizardM
                             <input
                               type="date"
                               value={pledgeData.endDate}
-                              onChange={(e) => updateData("endDate", e.target.value)}
+                              onChange={(e) => {
+                                updateData("endDate", e.target.value);
+                                setTimeout(handleNext, 300);
+                              }}
                               className={cn(
                                 "h-14 w-full text-[17px] font-medium rounded-2xl border-none transition-all px-4",
                                 "bg-slate-50 focus:bg-white focus:ring-2 focus:ring-slate-900"
@@ -477,9 +477,9 @@ export function PledgeWizardModal({ isOpen, onClose, onComplete }: PledgeWizardM
                                     {sh.label}
                                   </button>
                                 ))}
-                              </div>
-                            )}
-                          </div>
+                  </div>
+                )}
+                      </div>
                         </motion.div>
                       )}
 
@@ -487,15 +487,14 @@ export function PledgeWizardModal({ isOpen, onClose, onComplete }: PledgeWizardM
                       {currentSubStepIndex >= 1 && (
                         <motion.div
                           key="startDate"
-                          initial={{ opacity: 0, y: -20 }}
+                          initial={{ opacity: 0 }}
                           animate={{ 
                             opacity: 1, 
-                            y: 0,
                             scale: currentSubStepIndex === 1 ? 1 : 0.98,
                             filter: currentSubStepIndex === 1 ? "none" : "grayscale(0.5) opacity(0.5)"
                           }}
-                          exit={{ opacity: 0, y: -20 }}
-                          layout
+                          exit={{ opacity: 0 }}
+                          transition={{ duration: 0.2 }}
                           onClick={() => currentSubStepIndex > 1 && setCurrentSubStepIndex(1)}
                           className={cn("space-y-5", currentSubStepIndex > 1 && "cursor-pointer")}
                         >
@@ -509,28 +508,31 @@ export function PledgeWizardModal({ isOpen, onClose, onComplete }: PledgeWizardM
                             <input
                               type="date"
                               value={pledgeData.startDate}
-                              onChange={(e) => updateData("startDate", e.target.value)}
+                              onChange={(e) => {
+                                updateData("startDate", e.target.value);
+                                setTimeout(handleNext, 300);
+                              }}
                               className={cn(
                                 "h-14 w-full text-[17px] font-medium rounded-2xl border-none transition-all px-4",
                                 "bg-slate-50 focus:bg-white focus:ring-2 focus:ring-slate-900"
                               )}
                               readOnly={currentSubStepIndex > 1}
                             />
-                          </div>
+                    </div>
                         </motion.div>
                       )}
 
                       {/* 1. 반복 주기 */}
                       <motion.div
                         key="when"
-                        initial={{ opacity: 0, y: 20 }}
+                        initial={{ opacity: 0 }}
                         animate={{ 
                           opacity: 1, 
-                          y: 0,
                           scale: currentSubStepIndex === 0 ? 1 : 0.98,
                           filter: currentSubStepIndex === 0 ? "none" : "grayscale(0.5) opacity(0.5)"
                         }}
-                        layout
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.2 }}
                         onClick={() => currentSubStepIndex > 0 && setCurrentSubStepIndex(0)}
                         className={cn("space-y-5", currentSubStepIndex > 0 && "cursor-pointer")}
                       >
@@ -577,10 +579,10 @@ export function PledgeWizardModal({ isOpen, onClose, onComplete }: PledgeWizardM
                       {currentSubStepIndex >= 1 && (
                         <motion.div
                           key="shareWith"
-                          initial={{ opacity: 0, y: -20 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: -20 }}
-                          layout
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          exit={{ opacity: 0 }}
+                          transition={{ duration: 0.2 }}
                           className="space-y-5"
                         >
                           <label className="text-[22px] font-bold text-slate-900">함께 도전할 파트너</label>
@@ -589,14 +591,14 @@ export function PledgeWizardModal({ isOpen, onClose, onComplete }: PledgeWizardM
                               { value: "myself", label: "나 혼자만의 약속" },
                               { value: "family", label: "가족과 함께 공유" },
                             ].map((opt) => (
-                              <button
+                            <button
                                 key={opt.value}
                                 onClick={(e) => {
                                   e.stopPropagation();
                                   updateData("shareWith", opt.value as any);
                                   handleNext();
                                 }}
-                                className={cn(
+                              className={cn(
                                   "flex-1 h-16 rounded-2xl border-2 font-semibold transition-all px-4 text-center",
                                   pledgeData.shareWith === opt.value 
                                     ? "border-slate-900 bg-slate-900 text-white shadow-md" 
@@ -604,23 +606,23 @@ export function PledgeWizardModal({ isOpen, onClose, onComplete }: PledgeWizardM
                                 )}
                               >
                                 <span className="text-[15px]">{opt.label}</span>
-                              </button>
-                            ))}
-                          </div>
+                            </button>
+                          ))}
+                        </div>
                         </motion.div>
                       )}
 
                       {/* 1. 정체성 선언 */}
                       <motion.div
                         key="identity"
-                        initial={{ opacity: 0, y: 20 }}
+                        initial={{ opacity: 0 }}
                         animate={{ 
                           opacity: 1, 
-                          y: 0,
                           scale: currentSubStepIndex === 0 ? 1 : 0.98,
                           filter: currentSubStepIndex === 0 ? "none" : "grayscale(0.5) opacity(0.5)"
                         }}
-                        layout
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.2 }}
                         onClick={() => currentSubStepIndex > 0 && setCurrentSubStepIndex(0)}
                         className={cn("space-y-5", currentSubStepIndex > 0 && "cursor-pointer")}
                       >
@@ -649,26 +651,26 @@ export function PledgeWizardModal({ isOpen, onClose, onComplete }: PledgeWizardM
                           readOnly={currentSubStepIndex > 0}
                         />
                         {currentSubStepIndex === 0 && (
-                          <div className="flex flex-wrap gap-2 pt-1">
-                            {identityExamples.map((ex) => (
-                              <button
-                                key={ex}
+                        <div className="flex flex-wrap gap-2 pt-1">
+                          {identityExamples.map((ex) => (
+                            <button
+                              key={ex}
                                 onClick={(e) => {
                                   e.stopPropagation();
                                   updateData("identityStatement", ex);
                                   setTimeout(handleNext, 100);
                                 }}
-                                className={cn(
-                                  "px-3 py-1.5 text-[14px] font-medium rounded-full transition-all",
-                                  pledgeData.identityStatement === ex 
-                                    ? "bg-slate-900 text-white shadow-sm" 
-                                    : "bg-white border border-slate-200 text-slate-700 active:scale-95 hover:bg-slate-50"
-                                )}
-                              >
-                                {ex}
-                              </button>
-                            ))}
-                          </div>
+                              className={cn(
+                                "px-3 py-1.5 text-[14px] font-medium rounded-full transition-all",
+                                pledgeData.identityStatement === ex 
+                                  ? "bg-slate-900 text-white shadow-sm" 
+                                  : "bg-white border border-slate-200 text-slate-700 active:scale-95 hover:bg-slate-50"
+                              )}
+                            >
+                              {ex}
+                            </button>
+                          ))}
+                        </div>
                         )}
                       </motion.div>
                     </>
@@ -682,12 +684,7 @@ export function PledgeWizardModal({ isOpen, onClose, onComplete }: PledgeWizardM
                       <p className="text-[17px] font-medium text-slate-500">새로운 리듬을 시작할 준비가 되었습니다.</p>
                     </div>
 
-                    <motion.div
-                      initial={{ y: 20, opacity: 0 }}
-                      animate={{ y: 0, opacity: 1 }}
-                      transition={{ delay: 0.1 }}
-                      className="max-w-[340px] mx-auto"
-                    >
+                    <div className="max-w-[340px] mx-auto">
                       {/* 영수증 스타일 UI */}
                       <div className="bg-white rounded-none shadow-xl border-t-[6px] border-slate-900 overflow-hidden">
                         <div className="p-6 space-y-6">
@@ -780,20 +777,12 @@ export function PledgeWizardModal({ isOpen, onClose, onComplete }: PledgeWizardM
                               <p className="text-[14px] font-medium text-slate-700 leading-snug group-hover/item:text-primary transition-colors">{pledgeData.repairAction}</p>
                             </button>
                           </div>
-
-                          {/* 영수증 푸터 */}
-                          <div className="border-t border-dashed border-slate-200 pt-6 text-center space-y-3">
-                            <div className="inline-block px-4 py-1 border-2 border-slate-900 rounded-sm">
-                              <span className="text-[14px] font-mono font-bold text-slate-900 tracking-widest">CONFIRMED</span>
-                            </div>
-                            <p className="text-[12px] font-bold text-slate-900 uppercase tracking-tight">Starting from today</p>
-                          </div>
                         </div>
 
                         {/* 영수증 하단 톱니 모양 연출 (SVG 활용) */}
                         <div className="h-4 w-full bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iOCIgdmlld0JveD0iMCAwIDIwIDgiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTAgOEw1IDNMIDEwIDhMMTUgM0wyMCA4VjBIOFYwSDBWOFoiIGZpbGw9IndoaXRlIi8+PC9zdmc+')] bg-repeat-x rotate-180" />
                       </div>
-                    </motion.div>
+                    </div>
                   </div>
                 )}
               </div>
@@ -803,14 +792,14 @@ export function PledgeWizardModal({ isOpen, onClose, onComplete }: PledgeWizardM
         {/* 푸터 버튼 - iOS 스타일 */}
           <footer className="shrink-0 safe-area-bottom z-10 bg-white border-t border-slate-100">
             <div className="flex w-full">
-              {currentStep !== "summary" ? (
-                <>
-                  <button
-                    onClick={handleBack}
-                    className="w-20 h-16 flex items-center justify-center border-r border-slate-100 text-slate-400 active:bg-slate-50 transition-colors"
-                  >
-                    <ChevronLeft className="h-6 w-6" />
-                  </button>
+              <>
+                <button
+                  onClick={handleBack}
+                  className="w-20 h-16 flex items-center justify-center border-r border-slate-100 text-slate-400 active:bg-slate-50 transition-colors"
+                >
+                  <ChevronLeft className="h-6 w-6" />
+                </button>
+                {currentStep !== "summary" ? (
               <button
                 onClick={handleNext}
                     disabled={!isCurrentFieldValid}
@@ -824,16 +813,16 @@ export function PledgeWizardModal({ isOpen, onClose, onComplete }: PledgeWizardM
                 다음
                 <ArrowRight className="h-5 w-5" />
               </button>
-                </>
             ) : (
               <button
                 onClick={handleCompleteAction}
-                  className="w-full h-16 flex items-center justify-center gap-2 bg-primary text-white font-bold text-[18px] active:opacity-90 transition-opacity"
+                    className="flex-1 h-16 flex items-center justify-center gap-2 bg-primary text-white font-bold text-[18px] active:opacity-90 transition-opacity"
               >
-                  <Check className="h-6 w-6" />
+                    <Check className="h-6 w-6" />
                 리듬 시작하기
               </button>
             )}
+              </>
           </div>
         </footer>
       </div>
