@@ -6,9 +6,11 @@ import {
   Share2,
   ChevronDown,
   ChevronUp,
+  BarChart2,
 } from "lucide-react";
 import { cn } from "@/shared/lib/utils";
 import type { Pledge } from "@/shared/types";
+import { PledgeDeepDetailModal } from "./PledgeDeepDetailModal";
 
 interface PledgeDetailModalProps {
   pledge: Pledge | null;
@@ -18,6 +20,7 @@ interface PledgeDetailModalProps {
 
 export function PledgeDetailModal({ pledge, isOpen, onClose }: PledgeDetailModalProps) {
   const [isLogExpanded, setIsLogExpanded] = useState(false);
+  const [isDeepDetailOpen, setIsDeepDetailOpen] = useState(false);
 
   useEffect(() => {
     if (isOpen) {
@@ -93,9 +96,17 @@ export function PledgeDetailModal({ pledge, isOpen, onClose }: PledgeDetailModal
                   <ChevronLeft className="h-5 w-5 text-slate-900" />
                 </button>
                 <h1 className="text-[16px] font-bold text-slate-900">리듬 상세</h1>
-                <button className="w-9 h-9 flex items-center justify-center rounded-full bg-white/80 backdrop-blur-md shadow-sm">
-                  <Share2 className="w-4 h-4 text-slate-900" />
-                </button>
+                <div className="flex items-center gap-2">
+                  <button 
+                    onClick={() => setIsDeepDetailOpen(true)}
+                    className="w-9 h-9 flex items-center justify-center rounded-full bg-white/80 backdrop-blur-md shadow-sm transition-colors active:bg-slate-100"
+                  >
+                    <BarChart2 className="w-4 h-4 text-slate-900" />
+                  </button>
+                  <button className="w-9 h-9 flex items-center justify-center rounded-full bg-white/80 backdrop-blur-md shadow-sm">
+                    <Share2 className="w-4 h-4 text-slate-900" />
+                  </button>
+                </div>
               </div>
             </header>
 
@@ -258,6 +269,12 @@ export function PledgeDetailModal({ pledge, isOpen, onClose }: PledgeDetailModal
           </motion.div>
         </div>
       )}
+      
+      <PledgeDeepDetailModal 
+        pledge={pledge}
+        isOpen={isDeepDetailOpen}
+        onClose={() => setIsDeepDetailOpen(false)}
+      />
     </AnimatePresence>,
     document.body
   );

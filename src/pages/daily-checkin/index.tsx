@@ -11,6 +11,7 @@ import {
   HelpCircle,
   Play,
   Users,
+  Move
 } from "lucide-react";
 import { Button, Card, Textarea } from "@/shared/ui";
 import { cn } from "@/shared/lib/utils";
@@ -139,10 +140,25 @@ export function DailyCheckinPage() {
   };
 
   // Opacity indicators
-  const leftOpacity = Math.min(Math.abs(deltaX) / 150, 1) * (deltaX < 0 ? 1 : 0);
-  const rightOpacity = Math.min(Math.abs(deltaX) / 150, 1) * (deltaX > 0 ? 1 : 0);
-  const upOpacity = Math.min(Math.abs(deltaY) / 150, 1) * (deltaY < 0 ? 1 : 0);
-  const downOpacity = Math.min(Math.abs(deltaY) / 150, 1) * (deltaY > 0 ? 1 : 0);
+  const leftOpacity = Math.min(Math.abs(deltaX) / 100, 1) * (deltaX < -20 ? 1 : 0);
+  const rightOpacity = Math.min(Math.abs(deltaX) / 100, 1) * (deltaX > 20 ? 1 : 0);
+  const upOpacity = Math.min(Math.abs(deltaY) / 100, 1) * (deltaY < -20 ? 1 : 0);
+  const downOpacity = Math.min(Math.abs(deltaY) / 100, 1) * (deltaY > 20 ? 1 : 0);
+
+  // Dynamic background color based on swipe
+  const getDynamicBg = () => {
+    const distance = Math.max(Math.abs(deltaX), Math.abs(deltaY));
+    if (distance < 20) return { backgroundColor: "oklch(0.12 0 0)" };
+
+    if (Math.abs(deltaX) > Math.abs(deltaY)) {
+      if (deltaX < -50) return { backgroundColor: "oklch(0.35 0.06 150)" }; // Success
+      if (deltaX > 50) return { backgroundColor: "oklch(0.35 0.06 25)" };   // Failure
+    } else {
+      if (deltaY < -50) return { backgroundColor: "oklch(0.35 0.06 260)" }; // Adjust
+      if (deltaY > 50) return { backgroundColor: "oklch(0.35 0.02 0)" };    // Later
+    }
+    return { backgroundColor: "oklch(0.12 0 0)" };
+  };
 
   // 완료 화면
   if (isLastCard) {
@@ -254,14 +270,17 @@ export function DailyCheckinPage() {
   if (!currentPledge) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex flex-col bg-background bg-dot-matrix">
-      <header className="flex items-center justify-between border-b border-border/40 px-6 py-4 safe-area-top">
-        <Button variant="ghost" size="icon" className="rounded-full" onClick={() => navigate(-1)}>
+    <div 
+      className="fixed inset-0 z-50 flex flex-col transition-colors duration-500 bg-dot-matrix"
+      style={getDynamicBg()}
+    >
+      <header className="flex items-center justify-between border-b border-white/10 px-6 py-4 safe-area-top z-30">
+        <Button variant="ghost" size="icon" className="rounded-full text-white/70 hover:text-white" onClick={() => navigate(-1)}>
           <X className="h-5 w-5" />
         </Button>
         <div className="text-center">
-          <h2 className="text-lg font-medium text-foreground">오늘의 체크인</h2>
-          <p className="text-sm text-muted-foreground">
+          <h2 className="text-lg font-medium text-white">오늘의 체크인</h2>
+          <p className="text-sm text-white/50">
             {currentIndex + 1} / {pledges.length}
           </p>
         </div>
@@ -269,51 +288,10 @@ export function DailyCheckinPage() {
       </header>
 
       <main className="relative flex flex-1 items-center justify-center overflow-hidden px-4 py-12">
-        {/* Swipe indicators */}
-        <div
-          className="pointer-events-none absolute left-8 top-1/2 -translate-y-1/2 transition-opacity"
-          style={{ opacity: leftOpacity }}
-        >
-          <div className="flex h-20 w-20 items-center justify-center rounded-full bg-primary/20 backdrop-blur-sm">
-            <CheckCircle className="h-10 w-10 text-primary" />
-          </div>
-          <p className="mt-2 text-center text-sm font-medium text-primary">완료</p>
-        </div>
-
-        <div
-          className="pointer-events-none absolute right-8 top-1/2 -translate-y-1/2 transition-opacity"
-          style={{ opacity: rightOpacity }}
-        >
-          <div className="flex h-20 w-20 items-center justify-center rounded-full bg-warning/20 backdrop-blur-sm">
-            <AlertCircle className="h-10 w-10 text-warning" />
-          </div>
-          <p className="mt-2 text-center text-sm font-medium text-warning">못함</p>
-        </div>
-
-        <div
-          className="pointer-events-none absolute left-1/2 top-8 -translate-x-1/2 transition-opacity"
-          style={{ opacity: upOpacity }}
-        >
-          <div className="flex h-20 w-20 items-center justify-center rounded-full bg-warning/20 backdrop-blur-sm">
-            <AlertCircle className="h-10 w-10 text-warning" />
-          </div>
-          <p className="mt-2 text-center text-sm font-medium text-warning">못함</p>
-        </div>
-
-        <div
-          className="pointer-events-none absolute bottom-8 left-1/2 -translate-x-1/2 transition-opacity"
-          style={{ opacity: downOpacity }}
-        >
-          <div className="flex h-20 w-20 items-center justify-center rounded-full bg-muted/50 backdrop-blur-sm">
-            <HelpCircle className="h-10 w-10 text-muted-foreground" />
-          </div>
-          <p className="mt-2 text-center text-sm font-medium text-muted-foreground">아직 모름</p>
-        </div>
-
         {/* Swipeable Card */}
         <div
           ref={cardRef}
-          className="w-full max-w-sm touch-none select-none"
+          className="relative z-10 w-full max-w-sm touch-none select-none"
           style={cardStyle}
           onMouseDown={(e) => handleStart(e.clientX, e.clientY)}
           onMouseMove={(e) => handleMove(e.clientX, e.clientY)}
@@ -325,57 +303,126 @@ export function DailyCheckinPage() {
         >
           <Card
             className={cn(
-              "overflow-hidden shadow-xl",
-              currentPledge.shareWith !== "myself"
-                ? "border-2 border-primary/40 bg-gradient-to-br from-primary/10 to-transparent"
-                : "border-2 border-primary/30 bg-gradient-to-br from-primary/5 to-transparent"
+              "overflow-hidden shadow-2xl border-none bg-white rounded-[48px]",
+              currentPledge.shareWith !== "myself" && "ring-4 ring-primary/20"
             )}
           >
-            <div className="p-8">
+            <div className="p-10 flex flex-col items-center text-center">
               {/* Shared pledge indicator */}
               {currentPledge.shareWith !== "myself" && (
-                <div className="mb-4 flex items-center justify-center gap-2 rounded-full bg-primary/10 py-2">
+                <div className="mb-6 flex items-center justify-center gap-2 rounded-full bg-primary/10 px-4 py-1.5">
                   <Users className="h-4 w-4 text-primary" />
-                  <span className="text-sm font-medium text-primary">가족과 함께하는 약속</span>
+                  <span className="text-[11px] font-bold text-primary uppercase tracking-widest">Shared Rhythm</span>
                 </div>
               )}
-              <div className="mb-6 text-center">
-                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
-                  <Play className="h-8 w-8 text-primary" />
+              <div className="mb-8 w-full">
+                <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-foreground/5 animate-pulse">
+                  <Move className="h-8 w-8 text-foreground" />
                 </div>
-                <h3 className="mb-3 text-2xl font-semibold text-foreground">{currentPledge.title}</h3>
-                <p className="text-pretty text-muted-foreground leading-relaxed">{currentPledge.meaning}</p>
+                <h3 className="mb-4 text-[32px] font-black leading-tight text-foreground">{currentPledge.title}</h3>
+                <p className="text-[17px] text-muted-foreground font-medium leading-relaxed">{currentPledge.meaning}</p>
               </div>
 
-              <div className="space-y-3 rounded-2xl bg-background/50 p-4">
-                <p className="text-sm font-medium text-foreground">오늘의 행동</p>
-                <p className="text-pretty text-sm text-muted-foreground leading-relaxed">{currentPledge.action}</p>
+              <div className="w-full space-y-3 rounded-3xl bg-slate-50 p-6">
+                <p className="text-[13px] font-bold text-slate-400 uppercase tracking-widest">오늘의 행동</p>
+                <p className="text-[16px] text-slate-600 font-medium leading-relaxed">{currentPledge.action}</p>
               </div>
             </div>
           </Card>
         </div>
+
+        {/* 액션 인디케이터 (카드 위로 오버랩되는 레이어) */}
+        <div className="absolute inset-0 pointer-events-none z-20 overflow-hidden flex items-center justify-center">
+          {/* Success - Left Swipe */}
+          <div 
+            style={{ 
+              opacity: leftOpacity, 
+              transform: `translate(calc(-50% + ${deltaX * 0.2}px), -50%)`,
+              left: '25%' 
+            }}
+            className="absolute top-1/2 flex flex-col items-center gap-4 transition-all duration-200"
+          >
+            <div className="w-24 h-24 rounded-full bg-emerald-500/90 backdrop-blur-md flex items-center justify-center shadow-2xl border-4 border-white/20">
+              <CheckCircle className="text-white w-12 h-12 stroke-[2.5]" />
+            </div>
+            <span className="px-6 py-2 rounded-full bg-emerald-500/90 backdrop-blur-md text-[20px] font-black text-white uppercase tracking-tighter shadow-2xl border border-white/20">
+              SUCCESS
+            </span>
+          </div>
+
+          {/* Failure - Right Swipe */}
+          <div 
+            style={{ 
+              opacity: rightOpacity, 
+              transform: `translate(calc(50% + ${deltaX * 0.2}px), -50%)`,
+              right: '25%' 
+            }}
+            className="absolute top-1/2 flex flex-col items-center gap-4 transition-all duration-200"
+          >
+            <div className="w-24 h-24 rounded-full bg-rose-500/90 backdrop-blur-md flex items-center justify-center shadow-2xl border-4 border-white/20">
+              <AlertCircle className="text-white w-12 h-12 stroke-[2.5]" />
+            </div>
+            <span className="px-6 py-2 rounded-full bg-rose-500/90 backdrop-blur-md text-[20px] font-black text-white uppercase tracking-tighter shadow-2xl border border-white/20">
+              FAILURE
+            </span>
+          </div>
+
+          {/* Adjust - Up Swipe */}
+          <div 
+            style={{ 
+              opacity: upOpacity, 
+              transform: `translate(-50%, calc(-50% + ${deltaY * 0.2}px))`,
+              top: '25%' 
+            }}
+            className="absolute left-1/2 flex flex-col items-center gap-4 transition-all duration-200"
+          >
+            <div className="w-24 h-24 rounded-full bg-violet-500/90 backdrop-blur-md flex items-center justify-center shadow-2xl border-4 border-white/20">
+              <Settings className="text-white w-12 h-12 stroke-[2]" />
+            </div>
+            <span className="px-6 py-2 rounded-full bg-violet-500/90 backdrop-blur-md text-[20px] font-black text-white uppercase tracking-tighter shadow-2xl border border-white/20">
+              ADJUST
+            </span>
+          </div>
+
+          {/* Later - Down Swipe */}
+          <div 
+            style={{ 
+              opacity: downOpacity, 
+              transform: `translate(-50%, calc(50% + ${deltaY * 0.2}px))`,
+              bottom: '25%' 
+            }}
+            className="absolute left-1/2 flex flex-col items-center gap-4 transition-all duration-200"
+          >
+            <div className="w-24 h-24 rounded-full bg-slate-500/90 backdrop-blur-md flex items-center justify-center shadow-2xl border-4 border-white/20">
+              <HelpCircle className="text-white w-12 h-12 stroke-[2]" />
+            </div>
+            <span className="px-6 py-2 rounded-full bg-slate-500/90 backdrop-blur-md text-[20px] font-black text-white uppercase tracking-tighter shadow-2xl border border-white/20">
+              LATER
+            </span>
+          </div>
+        </div>
       </main>
 
       {/* Instructions */}
-      <div className="border-t border-border/40 bg-background/80 px-4 py-6 backdrop-blur-sm safe-area-bottom">
-        <div className="mx-auto max-w-md space-y-4">
-          <p className="text-center text-sm font-medium text-foreground">카드를 스와이프해서 체크하세요</p>
-          <div className="grid grid-cols-2 gap-3">
-            <div className="flex items-center gap-2 rounded-xl bg-primary/5 p-3">
-              <ChevronLeft className="h-5 w-5 text-primary" />
-              <span className="text-sm text-foreground">완료</span>
+      <div className="border-t border-white/10 bg-black/20 px-4 py-8 backdrop-blur-sm safe-area-bottom z-30">
+        <div className="mx-auto max-w-md space-y-6">
+          <p className="text-center text-[13px] font-bold text-white/40 uppercase tracking-[0.2em]">Swipe to record rhythm</p>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="flex items-center justify-center gap-3 rounded-2xl bg-white/5 py-4 border border-white/5">
+              <ChevronLeft className="h-5 w-5 text-emerald-400" />
+              <span className="text-[14px] font-bold text-white/80">SUCCESS</span>
             </div>
-            <div className="flex items-center gap-2 rounded-xl bg-warning/5 p-3">
-              <ChevronRight className="h-5 w-5 text-warning" />
-              <span className="text-sm text-foreground">못함</span>
+            <div className="flex items-center justify-center gap-3 rounded-2xl bg-white/5 py-4 border border-white/5">
+              <ChevronRight className="h-5 w-5 text-rose-400" />
+              <span className="text-[14px] font-bold text-white/80">FAILURE</span>
             </div>
-            <div className="flex items-center gap-2 rounded-xl bg-warning/5 p-3">
-              <ChevronUp className="h-5 w-5 text-warning" />
-              <span className="text-sm text-foreground">못함</span>
+            <div className="flex items-center justify-center gap-3 rounded-2xl bg-white/5 py-4 border border-white/5">
+              <ChevronUp className="h-5 w-5 text-violet-400" />
+              <span className="text-[14px] font-bold text-white/80">ADJUST</span>
             </div>
-            <div className="flex items-center gap-2 rounded-xl bg-muted/50 p-3">
-              <ChevronDown className="h-5 w-5 text-muted-foreground" />
-              <span className="text-sm text-foreground">아직 모름</span>
+            <div className="flex items-center justify-center gap-3 rounded-2xl bg-white/5 py-4 border border-white/5">
+              <ChevronDown className="h-5 w-5 text-slate-400" />
+              <span className="text-[14px] font-bold text-white/80">LATER</span>
             </div>
           </div>
         </div>

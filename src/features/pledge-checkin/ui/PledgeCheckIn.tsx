@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence, useMotionValue, useTransform } from "framer-motion";
-import { Check, X, Clock, Settings, ArrowLeft, ArrowRight, ArrowUp, ArrowDown } from "lucide-react";
+import { Check, X, Clock, Settings, ArrowLeft, ArrowRight, ArrowUp, ArrowDown, Move } from "lucide-react";
 import { cn } from "@/shared/lib/utils";
 import type { Pledge } from "@/shared/types";
 
@@ -15,22 +15,37 @@ export function PledgeCheckIn({ pledge, isOpen, onClose, onCheckIn }: PledgeChec
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
-  // 배경색 변환 (X축: 왼쪽 초록, 오른쪽 빨강 / Y축: 아래 회색, 위 보라)
+  // 배경색 변환 (더 부드럽고 눈이 편안한 파스텔톤/저채도 컬러로 변경)
   const backgroundColor = useTransform(
     [x, y],
     ([latestX, latestY]: [number, number]) => {
+      const distance = Math.max(Math.abs(latestX), Math.abs(latestY));
+      if (distance < 20) return "oklch(0.12 0 0)"; // 기본 어두운 배경
+
       if (Math.abs(latestX) > Math.abs(latestY)) {
-        if (latestX < -50) return "oklch(0.62 0.18 150)"; // Success (Green)
-        if (latestX > 50) return "oklch(0.58 0.18 25)"; // Failure (Red)
+        if (latestX < -50) return "oklch(0.35 0.06 150)"; // Success (Muted Green)
+        if (latestX > 50) return "oklch(0.35 0.06 25)";   // Failure (Muted Red)
       } else {
-        if (latestY > 50) return "oklch(0.94 0 0)"; // Pending (Gray)
-        if (latestY < -50) return "oklch(0.7 0.15 240)"; // Settings (Purple)
+        if (latestY > 50) return "oklch(0.35 0.02 0)";    // Later (Muted Gray)
+        if (latestY < -50) return "oklch(0.35 0.06 260)"; // Adjust (Muted Purple)
       }
-      return "oklch(0.12 0 0)"; // Default dark
+      return "oklch(0.12 0 0)";
     }
   );
 
   const opacity = useTransform(backgroundColor, (color) => (color === "oklch(0.12 0 0)" ? 0.9 : 1));
+
+  // 각 방향별 인디케이터의 투명도 및 위치 변환
+  const successOpacity = useTransform(x, [-150, -50], [1, 0]);
+  const failureOpacity = useTransform(x, [50, 150], [0, 1]);
+  const adjustOpacity = useTransform(y, [-150, -50], [1, 0]);
+  const laterOpacity = useTransform(y, [50, 150], [0, 1]);
+
+  // 카드 위로 떠오르는 효과를 위한 위치 변환
+  const successX = useTransform(x, [-150, 0], [0, -20]);
+  const failureX = useTransform(x, [0, 150], [20, 0]);
+  const adjustY = useTransform(y, [-150, 0], [0, -20]);
+  const laterY = useTransform(y, [0, 150], [20, 0]);
 
   const handleDragEnd = (_: any, info: any) => {
     const threshold = 100;
@@ -59,34 +74,6 @@ export function PledgeCheckIn({ pledge, isOpen, onClose, onCheckIn }: PledgeChec
             className="absolute inset-0 transition-colors duration-300" 
           />
 
-          {/* 제스처 안내 가이드 */}
-          <div className="absolute inset-0 pointer-events-none">
-            <div className="absolute left-8 top-1/2 -translate-y-1/2 flex flex-col items-center gap-2 opacity-40">
-              <div className="w-12 h-12 rounded-full border-2 border-white flex items-center justify-center">
-                <Check className="text-white" />
-              </div>
-              <span className="text-[12px] font-black text-white uppercase tracking-widest">Success</span>
-            </div>
-            <div className="absolute right-8 top-1/2 -translate-y-1/2 flex flex-col items-center gap-2 opacity-40">
-              <div className="w-12 h-12 rounded-full border-2 border-white flex items-center justify-center">
-                <X className="text-white" />
-              </div>
-              <span className="text-[12px] font-black text-white uppercase tracking-widest">Failure</span>
-            </div>
-            <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-40">
-              <div className="w-12 h-12 rounded-full border-2 border-white flex items-center justify-center">
-                <Clock className="text-white" />
-              </div>
-              <span className="text-[12px] font-black text-white uppercase tracking-widest">Later</span>
-            </div>
-            <div className="absolute top-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-40">
-              <div className="w-12 h-12 rounded-full border-2 border-white flex items-center justify-center">
-                <Settings className="text-white" />
-              </div>
-              <span className="text-[12px] font-black text-white uppercase tracking-widest">Adjust</span>
-            </div>
-          </div>
-
           {/* 드래그 가능한 카드 */}
           <motion.div
             drag
@@ -94,7 +81,7 @@ export function PledgeCheckIn({ pledge, isOpen, onClose, onCheckIn }: PledgeChec
             dragElastic={0.7}
             onDragEnd={handleDragEnd}
             style={{ x, y }}
-            className="relative w-[85%] max-w-sm aspect-[3/4] bg-white rounded-[48px] shadow-2xl p-10 flex flex-col justify-between items-center text-center touch-none cursor-grab active:cursor-grabbing"
+            className="relative z-10 w-[85%] max-w-sm aspect-[3/4] bg-white rounded-[48px] shadow-2xl p-10 flex flex-col justify-between items-center text-center touch-none cursor-grab active:cursor-grabbing"
           >
             <div className="w-full">
               <span className="inline-block px-4 py-1.5 rounded-full bg-secondary text-[11px] font-black uppercase tracking-widest mb-8">
@@ -109,11 +96,11 @@ export function PledgeCheckIn({ pledge, isOpen, onClose, onCheckIn }: PledgeChec
             </div>
 
             <div className="flex flex-col items-center gap-4">
-              <div className="w-16 h-16 rounded-full bg-foreground/5 flex items-center justify-center animate-bounce">
-                <ArrowDown className="text-muted-foreground w-6 h-6" />
+              <div className="w-16 h-16 rounded-full bg-foreground/5 flex items-center justify-center">
+                <Move className="text-muted-foreground w-6 h-6" />
               </div>
               <p className="text-[13px] font-bold text-muted-foreground/60">
-                Swipe in any direction to record
+                카드를 좌우로 스와이프하여 체크인을 기록하세요.
               </p>
             </div>
 
@@ -124,6 +111,61 @@ export function PledgeCheckIn({ pledge, isOpen, onClose, onCheckIn }: PledgeChec
               <X className="w-6 h-6 text-muted-foreground" />
             </button>
           </motion.div>
+
+          {/* 액션 인디케이터 (카드 위로 오버랩되는 레이어) */}
+          <div className="absolute inset-0 pointer-events-none z-20 overflow-hidden flex items-center justify-center">
+            {/* Success - Left Swipe */}
+            <motion.div 
+              style={{ opacity: successOpacity, x: successX, translateX: "-50%", translateY: "-50%" }}
+              className="absolute left-1/4 top-1/2 flex flex-col items-center gap-4"
+            >
+              <div className="w-24 h-24 rounded-full bg-emerald-500/90 backdrop-blur-md flex items-center justify-center shadow-2xl border-4 border-white/20">
+                <Check className="text-white w-12 h-12 stroke-[3]" />
+              </div>
+              <span className="px-6 py-2 rounded-full bg-emerald-500/90 backdrop-blur-md text-[20px] font-black text-white uppercase tracking-tighter shadow-2xl border border-white/20">
+                SUCCESS
+              </span>
+            </motion.div>
+
+            {/* Failure - Right Swipe */}
+            <motion.div 
+              style={{ opacity: failureOpacity, x: failureX, translateX: "50%", translateY: "-50%" }}
+              className="absolute right-1/4 top-1/2 flex flex-col items-center gap-4"
+            >
+              <div className="w-24 h-24 rounded-full bg-rose-500/90 backdrop-blur-md flex items-center justify-center shadow-2xl border-4 border-white/20">
+                <X className="text-white w-12 h-12 stroke-[3]" />
+              </div>
+              <span className="px-6 py-2 rounded-full bg-rose-500/90 backdrop-blur-md text-[20px] font-black text-white uppercase tracking-tighter shadow-2xl border border-white/20">
+                FAILURE
+              </span>
+            </motion.div>
+
+            {/* Adjust - Up Swipe */}
+            <motion.div 
+              style={{ opacity: adjustOpacity, y: adjustY, translateX: "-50%", translateY: "-50%" }}
+              className="absolute left-1/2 top-1/4 flex flex-col items-center gap-4"
+            >
+              <div className="w-24 h-24 rounded-full bg-violet-500/90 backdrop-blur-md flex items-center justify-center shadow-2xl border-4 border-white/20">
+                <Settings className="text-white w-12 h-12 stroke-[2]" />
+              </div>
+              <span className="px-6 py-2 rounded-full bg-violet-500/90 backdrop-blur-md text-[20px] font-black text-white uppercase tracking-tighter shadow-2xl border border-white/20">
+                ADJUST
+              </span>
+            </motion.div>
+
+            {/* Later - Down Swipe */}
+            <motion.div 
+              style={{ opacity: laterOpacity, y: laterY, translateX: "-50%", translateY: "50%" }}
+              className="absolute left-1/2 bottom-1/4 flex flex-col items-center gap-4"
+            >
+              <div className="w-24 h-24 rounded-full bg-slate-500/90 backdrop-blur-md flex items-center justify-center shadow-2xl border-4 border-white/20">
+                <Clock className="text-white w-12 h-12 stroke-[2]" />
+              </div>
+              <span className="px-6 py-2 rounded-full bg-slate-500/90 backdrop-blur-md text-[20px] font-black text-white uppercase tracking-tighter shadow-2xl border border-white/20">
+                LATER
+              </span>
+            </motion.div>
+          </div>
         </motion.div>
       )}
     </AnimatePresence>
