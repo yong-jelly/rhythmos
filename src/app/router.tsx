@@ -1,6 +1,7 @@
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { HomePage } from "@/pages/home";
+import { Home2Page } from "@/pages/home2";
 import { JourneyPage } from "@/pages/journey";
 import { CirclePage } from "@/pages/circle";
 import { GroupChallengePage } from "@/pages/circle/challenge";
@@ -41,6 +42,7 @@ export function AppRouter() {
       <Routes>
         <Route path="/" element={<Navigate to="/home" replace />} />
         <Route path="/home" element={<HomePage />} />
+        <Route path="/home2" element={<Home2Page />} />
         <Route path="/journey" element={<JourneyPage />} />
         <Route path="/circle" element={<CirclePage />} />
         <Route path="/circle/challenge/:id" element={<GroupChallengePage />} />
